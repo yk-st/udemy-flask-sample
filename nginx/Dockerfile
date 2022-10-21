@@ -8,4 +8,3 @@ ENV TZ="Asia/Tokyo" \
     LC_ALL="C.UTF-8"
 
 COPY default.conf /etc/nginx/conf.d/
-COPY mine.type /etc/nginx/conf.d/
