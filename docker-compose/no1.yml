@@ -25,7 +25,6 @@ services:
       - nginx_net
     depends_on:
       - nginx
-      - keycloak_net
     ports:
       - "80:80"
       - "443:443"
@@ -73,9 +72,3 @@ networks:
       driver: default
       config:
         - subnet: 192.168.10.0/24
-  keycloak_net:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.169.10.0/24
