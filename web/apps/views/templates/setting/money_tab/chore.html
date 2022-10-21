@@ -1,0 +1,78 @@
+<div class="tab-pane fade show active" id="okozukai" role="tabpanel" aria-labelledby="okozukai-tab">
+    <form role="form" method="POST" action="{{ url_for('setting.save_money', page='basic') }}">
+
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card-body">
+                        <h5>お小遣いは？</h5>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        {{ form.kozukaidate(class="form-control") }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                            {{ form.kozukaimani(placeholder="100", class="form-control", **{ "aria-label":"Recipient's username", "aria-describedby":"basic-addon3"}) }}
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon3">マニ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="roots" class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card-body">
+                        <h5>どのようなお手伝いをお願いする(最大15個まで)？
+                            <button type="button" class="btn btn-info" title="{{ default_chore }}" data-toggle="tooltip" data-html="true"　data-placement="left">
+                                ?
+                            </button>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            {% for chore in form.chorelist %}            
+            <div class="row">
+                <div class="col">
+                    <div class="card-body">
+                        {{ chore.chore(placeholder="例:下の子のお世話", class="form-control") }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                            {{ chore.mani(class="form-control", **{ "aria-label":"Recipient's username", "aria-describedby":"basic-addon2"}) }}
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2">マニ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="roots" class="container" align="right">
+            <div class="row">
+                <div class="col justify-content-end">
+                    <div class="card-body">
+                        <h5>
+                            {{ form.submit(class="btn btn-success")}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if form.errors %}
+        {{ form.errors }}
+        {% endif %}
+    </form>
+</div>

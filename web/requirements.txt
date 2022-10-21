@@ -1,0 +1,28 @@
+Flask==2.2.2
+greenlet==1.1.0
+Flask-Migrate==3.1.0
+Flask-SQLAlchemy==2.5.1
+#APScheduler==3.9.1
+uWSGI==2.0.20
+flask-debugtoolbar
+# OAuth用のライブラリ(アプリケーション側でoauthを実装する場合はこのライブラリを使う)
+#Flask-Dance==6.1.1
+PyMySQL==1.0.2
+
+# テスト
+pytest==7.1.3
+#tavern==1.23.3
+
+# OIDC用のライブラリ(アプリケーション側でoidcを実装する場合はこのライブラリを使う)
+#flask-oidc==1.4.0
+# OIDCライブラリの都合でバージョンを指定する
+#itsdangerous==2.0.1
+# keycloakをREST-API経由でいじり倒したい場合はこのライブラリ。今回はトークンイントロスペクションなどの発行のために使う
+python-keycloak==2.5.0
+# PyJWT(X-Access-Tokenの中にジョットが入ってくるそれをデーコードしてインフォメーションを取得するために使う)
+PyJWT==2.5.0
+
+# フォーム
+Flask-WTF==1.0.1
+
+Flask-Mail==0.9.1

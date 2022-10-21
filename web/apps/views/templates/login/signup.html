@@ -1,0 +1,76 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} 新規登録 {% endblock %}
+
+{% block content %}   
+
+    <div class="auth-wrapper">
+        <div class="auth-content">
+            <div class="auth-bg">
+                <span class="r"></span>
+                <span class="r s"></span>
+                <span class="r s"></span>
+                <span class="r"></span>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <ul class=flashes>
+                        {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% endwith %}
+                    <div class="mb-4">
+                        <i class="feather icon-unlock auth-icon"></i>
+                    </div>
+                    <h3 class="mb-4">新規登録</h3>
+
+                    <span class="mb-0 text-muted">
+                        {% if msg %}
+                            <span class="text-danger">{{ msg | safe }}</span>
+                        {% else %}
+                            Add your credentials
+                        {% endif %} 
+                    </span>
+
+                    <br />
+                    <br />
+                    
+                    <form role="form" method="POST" action="{{ url_for('login.sendauthmail') }}">
+
+                        {{ form.hidden_tag() }}
+                        {{ form.csrf_token }}                
+
+                        <div class="input-group mb-3">
+                            {{ form.nickname(placeholder="ニックネーム", class="form-control") }}
+                        </div>
+                        
+                        <div class="input-group mb-3">
+                            {{ form.user_id(placeholder="Email", class="input form-control", type="email") }}
+                        </div>
+
+                        <div class="input-group mb-4">
+                            {{ form.password(placeholder="Password", class="form-control", type="password") }}
+                        </div>
+                        
+                        <button type="submit" name="login" class="btn btn-primary shadow-2 mb-4">認証メールを送信する</button>
+
+                    </form>
+
+                    <p class="mb-0 text-muted">既にアカウントをお持ちの方はこちら <a href="{{ url_for('login.index') }}" >ログイン</a></p>
+                    
+                    <br />
+                    <p class="mb-2 text-muted">
+                        &copy; <a target="_blank" href="https://bit.ly/37fF9RT">CodedThemes</a> 
+                        - <a target="_blank" 
+                             href="https://appseed.us/product/datta-able/flask/">Flask Datta Able</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

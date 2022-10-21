@@ -1,0 +1,4 @@
+{{ nickname }} さん、以下から本登録してください。
+https://asset-okozukai.tokyo/auth/complete?tmp={{key}}
+
+有効時間は60分となります。

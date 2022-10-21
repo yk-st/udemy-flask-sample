@@ -1,0 +1,59 @@
+
+<div class="tab-pane fade" id="manisetting" role="tabpanel" aria-labelledby="mani-tab">
+    <div id="roots" class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card-body">
+                    <h5>どのようなお仕事が価値がある？
+                        <button type="button" class="btn btn-info" title="{{ default_chore }}" data-toggle="tooltip" data-html="true"　data-placement="left">
+                            ?
+                        </button>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <!--ここをjinjaのループとかで作ればいいかも。あとKozukaiもこのセットをJQで追加していく-->
+        <!--nameが一緒であれば、Listで送信することが可能-->
+        <div id="oshigoto" class="row">
+            <div class="col">
+                <div class="card-body">
+                    <input type="text" name="chore" class="form-control" placeholder="例:下の子のお世話">
+                </div>
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <input type="text" name="reward" class="form-control" placeholder="100" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">マニ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <div class="card-body">
+                    <button id='hoge' type="button" class="btn btn-danger" title="btn btn-danger" data-parent="#oshigoto" data-toggle="tooltip" onclick="delInput()">-</button>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="card-body">
+                    <button id='hoge' type="button" class="btn btn-info" title="btn btn-danger" data-parent="#oshigoto" onclick="addInput()" data-toggle="tooltip">＋</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="roots" class="container" align="right">
+        <div class="row">
+            <div class="col justify-content-end">
+                <div class="card-body">
+                    <h5>
+                        <button type="button" class="btn btn-success" title="保存" data-toggle="tooltip" data-html="true"　data-placement="left">
+                            保存
+                        </button>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
