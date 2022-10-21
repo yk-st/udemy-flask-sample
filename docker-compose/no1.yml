@@ -25,7 +25,7 @@ services:
       - nginx_net
     depends_on:
       - nginx
-      - keycloak
+      - keycloak_net
     ports:
       - "80:80"
       - "443:443"
