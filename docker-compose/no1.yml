@@ -1,0 +1,81 @@
+version: '3.5'
+services:
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    container_name: nginx_koz
+    networks:
+      nginx_net:
+        ipv4_address: 172.16.0.9
+    ports:
+      - "19689:80"
+      - "19688:80"
+    volumes:
+      - html:/usr/share/nginx/html
+      - socket:/tmp
+      - socket_api:/tmp_api
+
+  nginx_proxy:
+    build:
+      context: nginx_proxy
+      dockerfile: Dockerfile
+    container_name: nginx_proxy_koz
+    networks:
+      - nginx_net
+    depends_on:
+      - nginx
+      - keycloak
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # HTTPS用の証明書とキーをホストOSから、ゲストOSに連結する
+      - /etc/letsencrypt:/etc/letsencrypt
+      - html_proxy:/usr/share/nginx/html
+
+  certbot:
+    image: certbot/certbot:v1.26.0
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - html_proxy:/usr/share/nginx/html
+    depends_on:
+      - nginx_proxy
+    # 新規作成(サブドメも含めて取得する)
+    #entrypoint: ["certbot", "certonly", "-d $DOMAIN", "-d $API_DOMAIN",  "-d $KEY_DOMAIN", "-m $MAIL", "--agree-tos","--webroot", "-w","/usr/share/nginx/html/"]
+    # 更新の時はこちら
+    # 参考
+    # https://hogetech.info/network/web/lets-encrypt
+    # https://qiita.com/HeRo/items/f9eb8d8a08d4d5b63ee9
+    # https://server-recipe.com/1577/
+    #entrypoint: ["certbot", "renew"]
+    # 普段
+    command: ["--version"]
+ 
+
+volumes:
+  html:
+  html_proxy:
+  socket:
+  socket_api:
+  mysql:
+
+networks:
+  nginx_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24
+  keycloak_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.169.10.0/24
