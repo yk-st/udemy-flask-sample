@@ -1,15 +1,6 @@
-# ドメインの取得
-サブドメを取得する
-
-#　サーバーへのログイン
-
-
 # git 
 ssh-keygen
 git@github.com:yk-st/flask_sample_apps.git
-
-
-# 初期設定コマンド
 
 # アップデート
 sudo apt update
