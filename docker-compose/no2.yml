@@ -49,6 +49,7 @@ services:
       JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
     volumes:
       - socket:/tmp
+      - ./migrations/:/root/udemy-flask-sample/web/migrations
 
   certbot:
     image: certbot/certbot:v1.26.0
