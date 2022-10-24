@@ -15,6 +15,7 @@
                     <div class="page-wrapper">
                         <!-- [ Main Content ] start -->
                         <div id='kinyu'>
+                            <!--flashメッセージ表示-->
                             {% with messages = get_flashed_messages(with_categories=true) %}
                             {% if messages %}
                                 <ul class=flashes>
@@ -31,6 +32,7 @@
                                             <div class="card-header">
                                                 <form role="form" method="POST" action="">
 
+                                                    <!--CSRF 対策-->
                                                     {{ form.hidden_tag() }}
                                                     {{ form.csrf_token }}
                                             
@@ -47,8 +49,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <!--フォームの送信エラーが出た時に状況を表示してくれる-->
                                                     {% if form.errors %}
-                                                    {{ form.errors }}
+                                                        {{ form.errors }}
                                                     {% endif %}
                                                 </form>
                                             </div>

@@ -19,6 +19,7 @@ def money():
         form = MoneyBasicForm()
 
         # 有効なフォームの場合
+        # Tokenが想定外だと処理に入らない
         if request.method == "POST" and form.validate_on_submit():
 
                 moey:MONEY = MONEY(
@@ -26,6 +27,24 @@ def money():
                         system_id = "111111"
                 )
 
-                moey:MONEY = moey.get_record()
+                moey = moey.get_record()
 
+                # 入力された総資産を設定
+                if money is None:
+                        # データがある場合とない場合で分けることができる
+                        money = MONEY(
+                                # 認証認可が入ると、この処理はリクエストヘッダーから取得することができる
+                                system_id = "111111",
+                                soushisan =  form.soushisan
+                        )
+                else:
+                        money = form.soushisan
+
+                # 更新と削除を兼ねることが可能
+                db.session.add(money)
+                # 削除
+                #db.session.delete(money)
+                db.session.commit()
+
+        # 表示する内容を指定
         return render_template("setting/money_resource.html", form=form)

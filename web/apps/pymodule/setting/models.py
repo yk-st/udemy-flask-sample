@@ -15,7 +15,7 @@ class MONEY(db.Model):
     create_at = db.Column(db.DateTime, default=datetime.now)
     update_at = db.Column(db.DateTime, default=datetime.now)
 
-    def get_today_(self):
+    def get_data(self):
 
         # sqlも書くことができます
         #sql = text("""
