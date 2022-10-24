@@ -23,7 +23,7 @@ db = SQLAlchemy()
 csrf = CSRFProtect()
 
 class Config:
-    
+
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/{dbname}?charset=utf8'.format(**{
         'user': os.getenv('MYSQL_USER', ''),
@@ -51,6 +51,9 @@ class Config:
     JSON_AS_ASCII = False
 
 def create_app():
+
+    # configの設定を反映する
+    app.config.from_object(Configs)
 
     # CSRF対策
     csrf.init_app(app)
