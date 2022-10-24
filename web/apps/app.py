@@ -53,7 +53,7 @@ class Config:
 def create_app():
 
     # configの設定を反映する
-    app.config.from_object(Configs)
+    app.config.from_object(Config())
 
     # CSRF対策
     csrf.init_app(app)
