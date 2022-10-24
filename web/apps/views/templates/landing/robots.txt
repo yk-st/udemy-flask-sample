@@ -1,0 +1,3 @@
+User-Agent:*
+Disallow:/example/
+Sitemap:https://udemy-flask-sample.top/sitemap.xml

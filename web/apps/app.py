@@ -18,10 +18,54 @@ app = Flask(
     template_folder = "views/templates"
 )
 
+db = SQLAlchemy()
+
+csrf = CSRFProtect()
+
+class Config:
+    
+    # SQLAlchemy
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@{host}/{dbname}?charset=utf8'.format(**{
+        'user': os.getenv('MYSQL_USER', ''),
+        'password': os.getenv('MYSQL_PASSWORD', ''),
+        'host': 'mysql_koz',
+        'dbname': 'hoge'
+    })
+
+
+    # Assets Management
+    ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets') 
+
+    # セッションを使う際の秘密キー
+    SECRET_KEY = os.getenv('SECRET_KEY', '') 
+
+    # CSRFトークンの設定
+    WTF_CSRF_SECRET_KEY = os.getenv('CSRF_SECRET', '')
+    
+    # session 
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
+
+    WTF_CSRF_ENABLED = True
+
+    # jsonをそのままダンプする(ASCIIにしない)
+    JSON_AS_ASCII = False
+
 def create_app():
 
+    # CSRF対策
+    csrf.init_app(app)
+    
+    # databaseのインスタンスを作成する
+    db.init_app(app)
+    # Migration設定
+    Migrate(app, db)
+
+    # blue printでルートを設定する
     from apps.pymodule.landing import index as landing_view
     app.register_blueprint(landing_view.landing)
+
+    from apps.pymodule.setting import index as setting_view
+    app.register_blueprint(setting_view.setting)
 
     return app
 

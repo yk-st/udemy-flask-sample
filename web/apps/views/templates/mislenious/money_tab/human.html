@@ -1,0 +1,77 @@
+<div class="tab-pane fade show active" id="human" role="tabpanel" aria-labelledby="human-tab">
+
+    <form role="form" method="POST" action="{{ url_for('setting.save_human', page='basic') }}">
+
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card-body">
+                        <h5>生年月日は？</h5>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        {{ form.birth_day(class="form-control") }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card-body">
+                        <h5>学歴は？</h5>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-daterange card-body">
+                        {% for gakureki in form.gakureki_radio %}
+                        <div class="custom-control custom-radio custom-control-inline">
+                            {{ gakureki }}
+                            {{ gakureki.label }}
+                        </div>
+                        {% endfor %}    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card-body">
+                        <h5>あなたの状況を教えてください(該当するものにチェック)。</h5>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        {% for onestep in form.onestep_checkbox %}
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                {{ form[onestep](class="custom-control-input")}}
+                                {{ form[onestep].label(class="custom-control-label") }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="roots" class="container" align="right">
+            <div class="row">
+                <div class="col justify-content-end">
+                    <div class="card-body">
+                        <h5>
+                            <button type="submit" class="btn btn-success" title="保存" data-toggle="tooltip" data-html="true"　data-placement="left">
+                                保存
+                            </button>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% if form.errors %}
+    {{ form.errors }}
+    {% endif %}
+</div>

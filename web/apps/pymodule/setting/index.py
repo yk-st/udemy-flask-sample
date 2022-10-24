@@ -12,8 +12,7 @@ setting = Blueprint('setting',
         __name__, 
         url_prefix='/setting')
 
-
-@setting.route('/money', methods=["GET", "POST"])
+@setting.route('/', methods=["GET", "POST"])
 def money():
 
         # フォーム
