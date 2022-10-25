@@ -22,12 +22,12 @@ def money():
         # Tokenが想定外だと処理に入らない
         if request.method == "POST" and form.validate_on_submit():
 
-                moey:MONEY = MONEY(
+                money:MONEY = MONEY(
                         # 認証認可が入ると、この処理はリクエストヘッダーから取得することができる
                         system_id = "111111"
                 )
 
-                moey = moey.get_data()
+                money = money.get_data()
 
                 # 入力された総資産を設定
                 if money is None:
