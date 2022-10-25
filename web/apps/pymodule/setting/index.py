@@ -27,7 +27,7 @@ def money():
                         system_id = "111111"
                 )
 
-                moey = moey.get_record()
+                moey = moey.get_data()
 
                 # 入力された総資産を設定
                 if money is None:
