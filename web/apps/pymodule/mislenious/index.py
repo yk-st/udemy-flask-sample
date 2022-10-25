@@ -9,9 +9,9 @@ from apps.app import db
 from apps.pymodule.setting.models import MANI_CAPITAL, SOCIAL_CAPITAL, HUMAN_CAPTAL, CHORES, ONESTEP_MASTER
 from apps.pymodule.setting.froms import SocialSocialForm, human_basic_form_builder, MoneyBasicForm, ChoreForm
 
-setting = Blueprint('setting', 
+setting = Blueprint('mislenious', 
         __name__, 
-        url_prefix='/setting')
+        url_prefix='/mislenious')
 
 # 学歴クラス
 class Gakureki():
@@ -27,8 +27,9 @@ class Gakureki():
                 ]
                 self.checked = 1
 
-@setting.route('/social')
-def social():
+@setting.route('/mislenious')
+def human():
+
         form = SocialSocialForm()
 
         # 初期値の設定を行う
@@ -43,10 +44,7 @@ def social():
                 form.frends_external.data = user_social_capital.friend_external
                 form.frends_internal.data = user_social_capital.friend_internal
 
-        return render_template(setting.name + "/" + "social_resource.html", form=form)
-
-@setting.route('/human')
-def human():
+        #######  ここから別
 
         human_captal = HUMAN_CAPTAL(
                 system_id = current_user.get_id()
@@ -96,10 +94,8 @@ def human():
                 #人的資本はビルダーでビルドする
                 form = human_basic_form_builder(onesteplist, gakurekiClass)
 
-        return render_template(setting.name + "/" + "human_resource.html", form = form)
 
-@setting.route('/money')
-def money():
+        #######  ここから別
 
         form = MoneyBasicForm()
 
@@ -140,9 +136,10 @@ def money():
                         # max で append するとエラー
                         form.chorelist.append_entry(choreobj)
 
-        return render_template(setting.name + "/" + "money_resource.html", form=form)
 
-@setting.route('/save/social/<page>', methods=["GET", "POST"])
+        return render_template(setting.name + "/" + "human_resource.html", form = form)
+
+@setting.route('/mislenious/<page>', methods=["GET", "POST"])
 def save_social(page):
 
         form = SocialSocialForm()
@@ -174,10 +171,7 @@ def save_social(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(setting.name + "/" + "social_resource.html", form=form)
-
-@setting.route('/save/human/<page>', methods=["GET", "POST"])
-def save_human(page):
+        #######  ここから別
 
         oneseplist:ONESTEP_MASTER = None
         # マスターデータからデータを取得
@@ -230,11 +224,8 @@ def save_human(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(setting.name + "/" + "human_resource.html", form=form)
-
-@setting.route('/save/money/<page>', methods=["GET", "POST"])
-def save_money(page):
-
+        #######  ここから別
+        
         form:MoneyBasicForm = MoneyBasicForm()
 
         if request.method == "POST" and form.validate_on_submit():
@@ -281,5 +272,5 @@ def save_money(page):
                 
         else:
                 flash("無効なフォーム送信です")
-        
-        return render_template(setting.name + "/" + "money_resource.html", form=form)
+
+        return render_template(setting.name + "/" + "human_resource.html", form=form)
