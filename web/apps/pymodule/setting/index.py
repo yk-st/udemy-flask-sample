@@ -35,7 +35,7 @@ def money():
                         money = MONEY(
                                 # 認証認可が入ると、この処理はリクエストヘッダーから取得することができる
                                 system_id = "111111",
-                                soushisan =  form.soushisan
+                                soushisan =  form.soushisan.data
                         )
                 else:
                         money = form.soushisan.data
