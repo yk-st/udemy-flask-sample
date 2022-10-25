@@ -69,6 +69,123 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
     container_name: mysql_koz
 
+  #　key_cloakのデータ保存Mysql
+  mysql_keycloak:
+    build:
+      context: mysql
+      dockerfile: Dockerfile
+    volumes:
+      - mysql_keycloak:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    restart: always
+    ports:
+      - 3307:3306
+    networks:
+      - keycloak_net
+    environment:
+      MYSQL_DATABASE: ${KEYCLOAK_DB}
+      MYSQL_ROOT_PASSWORD: ${KEYCLOAK_DB_PASS}
+      MYSQL_USER: ${KEYCLOAK_DB_USER}
+      MYSQL_PASSWORD: ${KEYCLOAK_DB_PASS}
+    container_name: mysql_keycloak
+
+  #keycloak
+  keycloak:
+    build:
+      context: keycloak
+      dockerfile: Dockerfile
+    # ドメイン名と一致させておくのがベター
+    container_name: auth.udemy-flask-sample.top
+    ports:
+      # プロキシでhttpに終端してしまうため
+      # - 8080:8080
+      # ちなみにHTTPSのポートはこちら
+      - 8443:8443
+    # 内部からも通信できないとNG
+    networks:
+      - nginx_net
+      - keycloak_net
+    environment:
+      # jbossとキーがちょこちょこ違うので注意
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HOSTNAME: ${KEY_DOMAIN}
+      # リバプロの後ろで動作する場合は, true
+      #PROXY_ADDRESS_FORWARDING: "true"
+      # リバプロの設定
+      #REDIRECT_SOCKET: "proxy-https"
+      JAVA_OPTS: -server -Xms1024m -Xmx1024m 
+      # nginxで終端する場合は、SSLは不要。
+      KC_HTTPS_CERTIFICATE_FILE: /etc/letsencrypt/live/${KEY_DOMAIN}/fullchain.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/letsencrypt/live/${KEY_DOMAIN}/privkey.pem
+      DB_VENDOR: MYSQL
+      KC_DB: mysql
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASS}
+      KC_DB_URL: "jdbc:mysql://mysql_keycloak:3306/keycloaks"
+    entrypoint: ["/opt/keycloak/bin/kc.sh", "start"]
+    user: "0:0"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - mysql_keycloak
+
+  oauth2proxy:
+    build:
+      context: oauth2proxy
+      dockerfile: Dockerfile
+    container_name: oauth2proxy_koz
+    ports:
+      - 4180:4180
+    networks:
+      nginx_net:
+        ipv4_address: 172.16.0.11
+    environment:
+      # 全てのアドレスにたいしてOK（privateipが自動的に振られるため）
+      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:4180
+      # 32バイトじゃないとダメ
+      # Ccookie secretを使って「OAUTH2_PROXY_COOKIE_NAME」で書き込まれた内容をデコードできるがしない
+      OAUTH2_PROXY_COOKIE_SECRET: $COOKIE_SEC
+      OAUTH2_PROXY_COOKIE_SECURE: "false"
+      # TOKENが書き込まれるCookieの名前（あまり使うことはない）
+      OAUTH2_PROXY_COOKIE_NAME: "oauth2_proxy"
+      # サブドメインでもアクセスできるようにする
+      OAUTH2_PROXY_COOKIE_DOMAINS: "udemy-flask-sample.top"
+      OAUTH2_PROXY_COOKIE_SAMESITE: "lax"
+      OAUTH2_PROXY_COOKIE_EXPIRE: "30m"
+      OAUTH2_PROXY_COOKIE_REFRESH: "1m"
+      # gmailの場合はgmail.comとするが今回は全て
+      OAUTH2_PROXY_EMAIL_DOMAINS: "*"
+      # 認証後にリダイレクトする先
+      OAUTH2_PROXY_UPSTREAMS: "https://udemy-flask-sample.top"
+      # keycloakの場合はこちら(keycloakはレガシー)
+      OAUTH2_PROXY_PROVIDER: "keycloak-oidc"
+      # googleがデフォルト githubの時は以下みたいにする
+      # OAUTH2_PROXY_PROVIDER: "github"
+      # keycloakのFQDN(masterレルムは繋ぐことができない)
+      OAUTH2_PROXY_OIDC_ISSUER_URL: https://auth.udemy-flask-sample.top:8443/realms/hogepeke
+      OAUTH2_PROXY_CLIENT_ID: $CLIENT_ID
+      OAUTH2_PROXY_CLIENT_SECRET: $CLIENT_SECRET
+      # SLOする際に必要。リダイレクト先(rdパラメター)にで有効なパス(今回はlandingページに戻す)
+      OAUTH2_PROXY_WHITELIST_DOMAINS : "auth.udemy-flask-sample.top:8443"
+      #PKCEを利用したフローに対応する。スマホからアクセスする時などにトークン乗っ取り対応のため必要なのでつけておくと良い
+      OAUTH2_PROXY_FORCE_CODE_CHALLENGE_METHOD: "S256"
+      #callback
+      OAUTH2_PROXY_REDIRECT_URL: https://udemy-flask-sample.top/
+      OAUTH2_PROXY_SCOPE: openid email profile
+      # ヘッダーに認証情報を設定するかどうか
+      OAUTH2_PROXY_PASS_ACCESS_TOKEN: "true"
+      OAUTH2_PROXY_PASS_USER_HEADERS: "true"
+      OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: "true"
+      OAUTH2_PROXY_SET_XAUTHREQUEST: "true"
+      # ログイン画面ボタンをスキップする
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: "true"
+      OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL: "true"
+      #OAUTH2_PROXY_REVERSE_PROXY: "true"
+    depends_on:
+      # - keycloak
+      - certbot
+
   certbot:
     image: certbot/certbot:v1.26.0
     volumes:
@@ -94,6 +211,7 @@ volumes:
   socket:
   socket_api:
   mysql:
+  mysql_keycloak:
 
 networks:
   nginx_net:
@@ -108,3 +226,9 @@ networks:
       driver: default
       config:
         - subnet: 192.168.10.0/24
+  keycloak_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.169.10.0/24

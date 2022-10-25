@@ -46,8 +46,8 @@ def money():
                 #db.session.delete(money_record)
                 db.session.commit()
 
-        # flash メッセージ
-        flash("登録完了しました。")
+                # flash メッセージ
+                flash("登録完了しました。")
 
         # 表示する内容を指定
         return render_template("setting/money_resource.html", form=form)
