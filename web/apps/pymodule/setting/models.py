@@ -5,13 +5,13 @@ from datetime import datetime, date
 
 from apps.app import db
 
-# maniの収支を管理するテーブル
+# 総資産の収支を管理するテーブル
 class MONEY(db.Model):
     __tablename__ = "money"
 
     system_id = db.Column(db.BigInteger, primary_key=True, index=True)
     # 総資産
-    soushisan = db.Column(db.Integer, default = None)
+    soushisan = db.Column(db.Integer, default = 0)
     create_at = db.Column(db.DateTime, default=datetime.now)
     update_at = db.Column(db.DateTime, default=datetime.now)
 
