@@ -172,7 +172,7 @@ services:
       OAUTH2_PROXY_FORCE_CODE_CHALLENGE_METHOD: "S256"
       #callback
       OAUTH2_PROXY_REDIRECT_URL: https://udemy-flask-sample.top/
-      OAUTH2_PROXY_SCOPE: openid email profile
+      OAUTH2_PROXY_SCOPE: openid
       # ヘッダーに認証情報を設定するかどうか
       OAUTH2_PROXY_PASS_ACCESS_TOKEN: "true"
       OAUTH2_PROXY_PASS_USER_HEADERS: "true"
