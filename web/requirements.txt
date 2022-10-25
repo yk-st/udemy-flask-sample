@@ -2,6 +2,9 @@ Flask==2.2.2
 greenlet==1.1.0
 Flask-Migrate==3.1.0
 Flask-SQLAlchemy==2.5.1
+
+cryptography==37.0.4
+
 #APScheduler==3.9.1
 uWSGI==2.0.20
 flask-debugtoolbar
