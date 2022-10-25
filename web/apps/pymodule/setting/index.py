@@ -27,23 +27,23 @@ def money():
                         system_id = "111111"
                 )
 
-                money = money.get_data()
+                money_record = money.get_data()
 
                 # 入力された総資産を設定
-                if money is None:
+                if money_record is None:
                         # データがある場合とない場合で分けることができる
-                        money = MONEY(
+                        money_record = MONEY(
                                 # 認証認可が入ると、この処理はリクエストヘッダーから取得することができる
                                 system_id = "111111",
                                 soushisan =  form.soushisan.data
                         )
                 else:
-                        money = form.soushisan.data
+                        money_record = form.soushisan.data
 
                 # 更新と削除を兼ねることが可能
-                db.session.add(money)
+                db.session.add(money_record)
                 # 削除
-                #db.session.delete(money)
+                #db.session.delete(money_record)
                 db.session.commit()
 
         # 表示する内容を指定
