@@ -171,8 +171,8 @@ services:
       #PKCEを利用したフローに対応する。スマホからアクセスする時などにトークン乗っ取り対応のため必要なのでつけておくと良い
       OAUTH2_PROXY_FORCE_CODE_CHALLENGE_METHOD: "S256"
       #callback
-      OAUTH2_PROXY_REDIRECT_URL: https://udemy-flask-sample.top/
-      OAUTH2_PROXY_SCOPE: email
+      OAUTH2_PROXY_REDIRECT_URL: https://udemy-flask-sample.top
+      OAUTH2_PROXY_SCOPE: openid email profile
       # ヘッダーに認証情報を設定するかどうか
       OAUTH2_PROXY_PASS_ACCESS_TOKEN: "true"
       OAUTH2_PROXY_PASS_USER_HEADERS: "true"
