@@ -157,7 +157,7 @@ services:
       # gmailの場合はgmail.comとするが今回は全て
       OAUTH2_PROXY_EMAIL_DOMAINS: "*"
       # 認証後にリダイレクトする先
-      OAUTH2_PROXY_UPSTREAMS: "https://udemy-flask-sample.top"
+      OAUTH2_PROXY_UPSTREAMS: "https://udemy-flask-sample.top/settings"
       # keycloakの場合はこちら(keycloakはレガシー)
       OAUTH2_PROXY_PROVIDER: "keycloak-oidc"
       # googleがデフォルト githubの時は以下みたいにする
