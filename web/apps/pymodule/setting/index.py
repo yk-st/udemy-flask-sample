@@ -38,7 +38,7 @@ def money():
                                 soushisan =  form.soushisan
                         )
                 else:
-                        money = form.soushisan
+                        money = form.soushisan.data
 
                 # 更新と削除を兼ねることが可能
                 db.session.add(money)
