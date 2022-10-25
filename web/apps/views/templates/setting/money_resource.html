@@ -30,7 +30,8 @@
                                     <div class="col">
                                         <div class="card">
                                             <div class="card-header">
-                                                <form role="form" method="POST" action="">
+                                                <!--jinja テンプレート-->
+                                                <form role="form" method="POST" action="{{ url_for('setting.money') }}">
 
                                                     <!--CSRF 対策-->
                                                     {{ form.hidden_tag() }}

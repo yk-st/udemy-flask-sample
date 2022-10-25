@@ -33,6 +33,12 @@ alias gall='git add -A && git commit -m '\''commit'\'' && git push origin main'
 # build
 alias build='git pull;docker-compose build;docker-compose up -d'
 
+#
+https://udemy-flask-sample.top/setting/
+
+# command
+docker exec -it udemy-flask-sample_app_1 /bin/bash
+
 # keycloak 
  SSO session idle timeout変更
 
