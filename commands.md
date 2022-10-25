@@ -14,8 +14,6 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io -y
 sudo usermod -aG docker $USER 
 newgrp docker
 
-
-
 sudo apt-get install htop
 
 # ssh
@@ -32,29 +30,11 @@ git config --global user.email "mail"
 
 alias gall='git add -A && git commit -m '\''commit'\'' && git push origin main'
 
-# git ignore
-何か除外する
-
-# レクチャー80
-flask route
-で、docのページを確認するようにすればOK
-
-
-# HTMLのテンプレを用意する
-
-1. 認証認可までは動画を取ってしまう。セクション８まで録画をしてしまう。
-
-
-2. Viewの部分は、該当部分を紹介するだけにして、モックで画面が移動できるようにすればいい
-そこからロジック部分をいくつか作り込んでいくイメージ
-
-レクチャー54は最後に録画する。
-
-一旦作りきって、フォームとかを歯抜けの状態にして行く感じ。
-
+# build
+alias build='git pull;docker-compose build;docker-compose up -d'
 
 # keycloak 
- SSO session idle timeou をちゃんと変えておく。
+ SSO session idle timeout変更
 
 
 # actions
