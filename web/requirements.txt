@@ -3,6 +3,7 @@ greenlet==1.1.0
 Flask-Migrate==3.1.0
 Flask-SQLAlchemy==2.5.1
 
+#RS256などをエンコードするためのコードもこっそり入っている。
 cryptography==37.0.4
 
 #APScheduler==3.9.1

@@ -58,7 +58,7 @@ def money():
 
                 money:MONEY = MONEY(
                         # 認証認可が入ると、この処理はリクエストヘッダーから取得することができる
-                        system_id = 111111
+                        system_id = check_jwt()
                 )
 
                 money_record = money.get_data()
@@ -68,7 +68,7 @@ def money():
                         # データがある場合とない場合で分けることができる
                         money_record = MONEY(
                                 # 認証認可が入ると、この処理はリクエストヘッダーから取得することができる
-                                system_id = 111111,
+                                system_id = check_jwt(),
                                 soushisan =  form.soushisan.data
                         )
                 else:
