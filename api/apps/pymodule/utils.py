@@ -11,7 +11,7 @@ def check_token(func):
     def token(*args, **kwargs):
     
         # Token　チェック
-        if "X-Access-Token" in request.headers:
+        if "x-access-token" in request.headers:
 
             # JWTをデコードするためのパブリックキー
             public_key_body = os.getenv('JWT_PUBLIC_KEY', '')
@@ -22,7 +22,7 @@ def check_token(func):
 
                 # キーがデコードできるかチェックする(ローカルチェック)
                 jwt.decode(
-                    request.headers["X-Access-Token"],
+                    request.headers["x-access-token"],
                     public_key,
                     algorithms=["RS256"],
                     audience="flasks",
