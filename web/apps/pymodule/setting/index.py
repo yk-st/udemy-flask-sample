@@ -39,7 +39,7 @@ def check_jwt():
         public_key,
         algorithms=["RS256"],
         audience="audience",
-        issuer="https://auth.udemy-flask-sample.top:8443/realms/hoegpeke")["sub"]
+        issuer="https://auth.udemy-flask-sample.top:8443/realms/hogepeke")["sub"]
 
     return sub
 
