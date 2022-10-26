@@ -38,7 +38,7 @@ def check_jwt():
         request.headers["X-Access-Token"],
         public_key,
         algorithms=["RS256"],
-        audience="audience",
+        audience="flasks",
         issuer="https://auth.udemy-flask-sample.top:8443/realms/hogepeke")["sub"]
 
     return sub
