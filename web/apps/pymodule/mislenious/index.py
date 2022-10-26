@@ -6,8 +6,8 @@ import logging
 
 from apps.app import db
 from apps.pymodule.setting.index import check_jwt
-from apps.pymodule.setting.models import MANI_CAPITAL, SOCIAL_CAPITAL, HUMAN_CAPTAL, CHORES, ONESTEP_MASTER
-from apps.pymodule.setting.froms import SocialSocialForm, human_basic_form_builder, MoneyBasicForm, ChoreForm
+from apps.pymodule.mislenious.models import MANI_CAPITAL, SOCIAL_CAPITAL, HUMAN_CAPTAL, CHORES, ONESTEP_MASTER
+from apps.pymodule.mislenious.form import SocialSocialForm, human_basic_form_builder, MoneyBasicForm, ChoreForm
 
 setting = Blueprint('mislenious', 
         __name__, 
