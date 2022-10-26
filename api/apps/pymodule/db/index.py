@@ -52,6 +52,8 @@ class index(Resource):
         def get(self):
                 # marshalを使うと、return時に値をラッピングしてくれる
                 money = MONEY( 
-                        system_id = get_jwt()
+                        #system_id = get_jwt()
+                        system_id = '9d9d33e0-bb8f-4724-99d9-807cf8b91cdb'
                 )
+                print(money.system_id)
                 return money.get_data()
