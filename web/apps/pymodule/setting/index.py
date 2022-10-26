@@ -15,10 +15,11 @@ setting = Blueprint('setting',
 
 @setting.route('logout', methods=["GET", "POST"])
 def logout():
-
+    
+    # logoutのエンドポイントを呼び出す
     return redirect("https://udemy-flask-sample.top/oauth2/sign_out?rd=https%3A%2F%2Fauth.udemy-flask-sample.top%3A8443%2Frealms%2Fhogepeke%2Fprotocol%2Fopenid-connect%2Flogout/")
 
-@setting.route('logout', methods=["GET", "POST"])
+@setting.route('check_jwt', methods=["GET", "POST"])
 def check_jwt():
     # JWTをデコードするためのパブリックキー
     public_key_body = os.getenv('JWT_PUBLIC_KEY', '')
