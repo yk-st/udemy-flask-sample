@@ -15,6 +15,8 @@ social_nm = api.namespace('api/v1', description='social')
 # response
 responses_dic = {200: 'Ping Success', 201: 'Process Success', 403: 'Not Authorized', 500: 'Internal Server Error'}
 
+# 以下レスポンス定義
+
 # カスタムフィールドで対応する
 # https://github.com/python-restx/flask-restx/issues/115
 class DictItem(fields.Raw):
@@ -69,12 +71,12 @@ class index(Resource):
 
         @social_nm.doc('get_social_data', responses=responses_dic)
         @social_nm.marshal_with(model, envelope='resource')
-        #@check_token
+        @check_token
         def get(self):
                 # marshalを使うと、return時に値をラッピングしてくれる
                 return hoge().get_record()
 
         @social_nm.doc(responses=responses_dic)
-        #@check_token
+        @check_token
         def post(self):
                 return {'hello': 'post'}

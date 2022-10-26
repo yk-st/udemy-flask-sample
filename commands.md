@@ -63,5 +63,30 @@ curl -k \
 # flaskのルート確認
 flask routes
 
+# 返却したいAPI
+```
+{
+    "resource": {
+        "id": "aaa",
+        "address": {
+            "zip": "peke",
+            "postal": "maruo"
+        },
+        "addresses": [
+            {
+                "id": 1,
+                "zip": "peke",
+                "postal": "maruo"
+            },
+            {
+                "id": 2,
+                "zip": "pekeo",
+                "postal": "maruo2"
+            }
+        ]
+    }
+}
+```
+
 # actions
  https://hsmtweb.com/tool-service/github-actions.html
