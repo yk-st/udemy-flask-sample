@@ -27,8 +27,8 @@ class Gakureki():
                 ]
                 self.checked = 1
 
-@setting.route('/mislenious')
-def human():
+@setting.route('/')
+def mislenious():
 
         form = SocialSocialForm()
 
@@ -44,7 +44,18 @@ def human():
                 form.frends_external.data = user_social_capital.friend_external
                 form.frends_internal.data = user_social_capital.friend_internal
 
-        #######  ここから別
+        # humanタブデータ
+        humanform = human()
+        # 
+        moneyform = money()
+
+        return render_template(
+                setting.name + "/" + "social_resource.html", 
+                form=form,
+                humanform = humanform,
+                moneyform = moneyform)
+
+def human():
 
         human_captal = HUMAN_CAPTAL(
                 system_id = current_user.get_id()
@@ -94,8 +105,9 @@ def human():
                 #人的資本はビルダーでビルドする
                 form = human_basic_form_builder(onesteplist, gakurekiClass)
 
+        return form
 
-        #######  ここから別
+def money():
 
         form = MoneyBasicForm()
 
@@ -136,10 +148,10 @@ def human():
                         # max で append するとエラー
                         form.chorelist.append_entry(choreobj)
 
+        return form
 
-        return render_template(setting.name + "/" + "human_resource.html", form = form)
 
-@setting.route('/mislenious/<page>', methods=["GET", "POST"])
+@setting.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_social(page):
 
         form = SocialSocialForm()
@@ -171,7 +183,10 @@ def save_social(page):
         else:
                 flash("無効なフォーム送信です")
 
-        #######  ここから別
+        return render_template(setting.name + "/" + "social_resource.html", form=form)
+
+@setting.route('/save/mislenious/<page>', methods=["GET", "POST"])
+def save_human(page):
 
         oneseplist:ONESTEP_MASTER = None
         # マスターデータからデータを取得
@@ -224,8 +239,11 @@ def save_social(page):
         else:
                 flash("無効なフォーム送信です")
 
-        #######  ここから別
-        
+        return render_template(setting.name + "/" + "human_resource.html", form=form)
+
+@setting.route('/save/mislenious/<page>', methods=["GET", "POST"])
+def save_money(page):
+
         form:MoneyBasicForm = MoneyBasicForm()
 
         if request.method == "POST" and form.validate_on_submit():
@@ -272,5 +290,5 @@ def save_social(page):
                 
         else:
                 flash("無効なフォーム送信です")
-
-        return render_template(setting.name + "/" + "human_resource.html", form=form)
+        
+        return render_template(setting.name + "/" + "money_resource.html", form=form)
