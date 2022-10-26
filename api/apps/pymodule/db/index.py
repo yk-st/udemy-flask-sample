@@ -47,7 +47,7 @@ class index(Resource):
         # 予測可能にする：Languageで言語変えたりとかも入れても良い
 
         @dbs_nm.doc('get_sdbs_data', responses=responses_dic)
-        @dbs_nm.marshal_with(model, envelope='resource')
+        @dbs_nm.marshal_with(model, envelope='money')
         @check_token
         def get(self):
                 # marshalを使うと、return時に値をラッピングしてくれる
