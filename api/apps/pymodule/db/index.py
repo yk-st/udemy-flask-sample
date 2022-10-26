@@ -2,7 +2,7 @@ from tkinter import TRUE
 from flask import Blueprint,request
 from flask_restx import Resource, fields
 from apps.app import api, db
-from apps.pymodule.utils import check_token
+from apps.pymodule.utils import check_token, get_jwt
 from apps.pymodule.db.models import MONEY
 import json
 
@@ -51,4 +51,7 @@ class index(Resource):
         @check_token
         def get(self):
                 # marshalを使うと、return時に値をラッピングしてくれる
-                return MONEY().get_record()
+                money = MONEY( 
+                        system_id = get_jwt()
+                )
+                return money.get_record()
