@@ -13,7 +13,6 @@ inqury = Blueprint('inqury',
 def index():
 
         inqryform = InquryForm()
-
         return render_template(inqury.name + "/inqury.html", form = inqryform)
 
 @inqury.route('/complete', methods=["GET", "POST"])
@@ -22,10 +21,10 @@ def complete():
         inqryform = InquryForm()
         if request.method == "POST" and inqryform.validate_on_submit():
 
-                username = request.form['username']
-                company = request.form['company']
-                email = request.form['email']
-                inqury_form = request.form['inqury']
+                username = inqryform.username.data
+                company = inqryform.company.data
+                email = inqryform.email.data
+                inqury_form = inqryform.inqury.data
 
                 send_email(email, '問い合わせを受け付けました。', inqury.name + "/contact", username=username, company=company, inqury_form=inqury_form)
                 # admin向けにメールを送る

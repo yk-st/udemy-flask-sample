@@ -19,7 +19,7 @@ app = Flask(
 )
 
 db = SQLAlchemy()
-
+mail = Mail()
 csrf = CSRFProtect()
 
 class Config:
@@ -50,6 +50,14 @@ class Config:
     # jsonをそのままダンプする(ASCIIにしない)
     JSON_AS_ASCII = False
 
+    # Gmail Setting
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS =  True
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME', '')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', '')
+    MAIL_DEFAULT_SENDER = 'FLASK-SAMPLE'
+
 def create_app():
 
     # configの設定を反映する
@@ -66,6 +74,9 @@ def create_app():
 
     # CSRF対策
     csrf.init_app(app)
+
+    # mail
+    mail.init_app(app)
 
     # databaseのインスタンスを作成する
     db.init_app(app)
