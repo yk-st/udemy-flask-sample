@@ -69,12 +69,12 @@ class index(Resource):
 
         @social_nm.doc('get_social_data', responses=responses_dic)
         @social_nm.marshal_with(model, envelope='resource')
-        @check_token
+        #@check_token
         def get(self):
                 # marshalを使うと、return時に値をラッピングしてくれる
                 return hoge().get_record()
 
         @social_nm.doc(responses=responses_dic)
-        @check_token
+        #@check_token
         def post(self):
                 return {'hello': 'post'}
