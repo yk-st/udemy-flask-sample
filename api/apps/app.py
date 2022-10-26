@@ -13,7 +13,7 @@ class Config:
         'user': os.getenv('MYSQL_USER', ''),
         'password': os.getenv('MYSQL_PASSWORD', ''),
         'host': 'mysql_koz',
-        'dbname': 'moneys'
+        'dbname': 'hoge'
     })
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
