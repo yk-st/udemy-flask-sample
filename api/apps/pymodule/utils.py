@@ -9,10 +9,10 @@ def check_token(func):
 
     @wraps(func)
     def token(*args, **kwargs):
-    
+        print(request.headers)
         # Token　チェック
         if "x-access-token" in request.headers:
-
+            print("hoge")
             # JWTをデコードするためのパブリックキー
             public_key_body = os.getenv('JWT_PUBLIC_KEY', '')
             public_key = "-----BEGIN PUBLIC KEY-----\n" \
