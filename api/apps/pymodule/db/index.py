@@ -46,8 +46,8 @@ class index(Resource):
         # 202 accepted 200はpingが通ったくらいのイメージ 201は処理したよ。というイメージで使われることが多い。
         # 予測可能にする：Languageで言語変えたりとかも入れても良い
 
-        @dbs.doc('get_sdbs_data', responses=responses_dic)
-        @dbs.marshal_with(model, envelope='resource')
+        @dbs_nm.doc('get_sdbs_data', responses=responses_dic)
+        @dbs_nm.marshal_with(model, envelope='resource')
         @check_token
         def get(self):
                 # marshalを使うと、return時に値をラッピングしてくれる
