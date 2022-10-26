@@ -34,6 +34,7 @@ def check_jwt():
     # 例えば期限切れの場合はこんなログが出る
     
     # issureとaudienceもチェックを行う
+    # 変なissureのトークンをエンコードしようとするとエラーになる
     sub = jwt.decode(
         request.headers["X-Access-Token"],
         public_key,

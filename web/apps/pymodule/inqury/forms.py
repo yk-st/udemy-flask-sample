@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField
+from wtforms import StringField, TextAreaField
 from wtforms.validators import Email, DataRequired, length
 
 class InquryForm(FlaskForm):
