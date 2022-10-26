@@ -54,4 +54,4 @@ class index(Resource):
                 money = MONEY( 
                         system_id = get_jwt()
                 )
-                return money.get_record()
+                return money.get_data()
