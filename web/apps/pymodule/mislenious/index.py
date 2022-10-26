@@ -2,10 +2,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from flask import Blueprint, flash
 from flask import render_template, request
-from flask_login import current_user
 import logging
 
 from apps.app import db
+from apps.pymodule.setting.index import check_jwt
 from apps.pymodule.setting.models import MANI_CAPITAL, SOCIAL_CAPITAL, HUMAN_CAPTAL, CHORES, ONESTEP_MASTER
 from apps.pymodule.setting.froms import SocialSocialForm, human_basic_form_builder, MoneyBasicForm, ChoreForm
 
@@ -34,7 +34,7 @@ def mislenious():
 
         # 初期値の設定を行う
         social_captal = SOCIAL_CAPITAL(
-                system_id = current_user.get_id()
+                system_id = check_jwt()
         )
 
         user_social_capital:SOCIAL_CAPITAL = social_captal.get_record()
@@ -58,7 +58,7 @@ def mislenious():
 def human():
 
         human_captal = HUMAN_CAPTAL(
-                system_id = current_user.get_id()
+                system_id = check_jwt()
         )
 
         # 既に登録データがあるかチェック
@@ -112,14 +112,14 @@ def money():
         form = MoneyBasicForm()
 
         mani_captal:MANI_CAPITAL = MANI_CAPITAL(
-                system_id = current_user.get_id()
+                system_id = check_jwt()
         )
 
         mani_captal_record:MANI_CAPITAL = mani_captal.get_record()
 
         # お手伝いテーブルの取得
         chores:CHORES = CHORES(
-                system_id = current_user.get_id()
+                system_id = check_jwt()
         )
 
         chores_record:CHORES = chores.get_record()
@@ -159,7 +159,7 @@ def save_social(page):
         if request.method == "POST" and form.validate_on_submit():
 
                 social_captal = SOCIAL_CAPITAL(
-                        system_id = current_user.get_id()
+                        system_id = check_jwt()
                 )
 
                 user_social_capital:SOCIAL_CAPITAL = social_captal.get_record()
@@ -167,7 +167,7 @@ def save_social(page):
                 # 登録データが存在していない場合
                 if user_social_capital is None:
                         user_social_capital = SOCIAL_CAPITAL(
-                                system_id = current_user.get_id(),
+                                system_id = check_jwt(),
                                 friend_internal = form.frends_internal.data,
                                 friend_external = form.frends_external.data,
                                 social_score = 10
@@ -208,7 +208,7 @@ def save_human(page):
                                 "checked": form[onestep].data})
 
                 human_captal:HUMAN_CAPTAL = HUMAN_CAPTAL(
-                        system_id = current_user.get_id()
+                        system_id = check_jwt()
                 )
 
                 # 人的資本取得
@@ -217,7 +217,7 @@ def save_human(page):
                 # 初期登録の場合
                 if human_capital_record is None:
                         human_capital_record:HUMAN_CAPTAL = HUMAN_CAPTAL(
-                                system_id = current_user.get_id(),
+                                system_id = check_jwt(),
                                 birth_day = form.birth_day.data,
                                 gakureki = form.gakureki_radio.data,
                                 onestep_staus = onestep_status,
@@ -249,14 +249,14 @@ def save_money(page):
         if request.method == "POST" and form.validate_on_submit():
 
                 mani_captal:MANI_CAPITAL = MANI_CAPITAL(
-                        system_id = current_user.get_id()
+                        system_id = check_jwt()
                 )
 
                 mani_captal_record:MANI_CAPITAL = mani_captal.get_record()
 
                 # お手伝いテーブルの登録
                 chores:CHORES = CHORES(
-                        system_id = current_user.get_id()
+                        system_id = check_jwt()
                 )
 
                 chores_record:CHORES = chores.get_record()
@@ -264,14 +264,14 @@ def save_money(page):
                 # 初回登録の場合
                 if mani_captal_record is None:
                         mani_captal_record = MANI_CAPITAL(
-                                system_id = current_user.get_id(),
+                                system_id = check_jwt(),
                                 okozukai = form.kozukaimani.data,
                                 okozukai_date = form.kozukaidate.data,
                                 mani_score = 10
                         )
 
                         chores_record = CHORES(
-                                system_id = current_user.get_id(),
+                                system_id = check_jwt(),
                                 chore_mani = form.chorelist.data
                         )
                 else:
