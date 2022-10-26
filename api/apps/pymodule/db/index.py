@@ -38,7 +38,7 @@ resource_base['update_at'] = fields.String(readonly=True,
 model = dbs_nm.model('hoge', resource_base)
 
 # 以下レスポンス定義
-@dbs.route('/dbs')
+@dbs_nm.route('/dbs')
 class index(Resource):
 
         # サーフェイスコントロール(トークンがない、必須項目が入ってないなど)はデコレーターで実施する
