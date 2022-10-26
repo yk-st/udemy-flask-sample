@@ -28,7 +28,7 @@ class Gakureki():
                 self.checked = 1
 
 @mislenious.route('/')
-def mislenious():
+def index():
 
         form = SocialSocialForm()
 
