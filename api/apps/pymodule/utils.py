@@ -20,6 +20,7 @@ def check_token(func):
                             + "\n-----END PUBLIC KEY-----"
             try:
 
+                print(request.headers["X-Access-Token"])
                 # キーがデコードできるかチェックする(ローカルチェック)
                 jwt.decode(
                     request.headers["X-Access-Token"],
@@ -31,7 +32,7 @@ def check_token(func):
                 #　イントロスペクションを行うエンドポイントを追加するとよりベター
 
             except Exception as e:
-                print(e.with_traceback)
+                print(e)
                 api.abort(403)
             
         else:
