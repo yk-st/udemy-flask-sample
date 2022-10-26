@@ -48,7 +48,7 @@ https://udemy-flask-sample.top/oauth2/sign_out?rd=https%3A%2F%2Fauth.udemy-flask
 # トークン取得系のコマンド
 curl -k -X POST \
         -H "Content-Type: application/x-www-form-urlencoded" \
-        -d 'grant_type=client_credentials' \
+        -d "grant_type=client_credentials&scope=openid" \
         -d "client_id=flasks" \
         -d "client_secret=G6xqdoC33HytUhEi0vjvUgKMSGZ2QXYL" \
          "https://auth.udemy-flask-sample.top:8443/realms/hogepeke/protocol/openid-connect/token"

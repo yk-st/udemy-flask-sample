@@ -9,7 +9,7 @@ from apps.app import db
 class MONEY(db.Model):
     __tablename__ = "money"
 
-    system_id = db.Column(db.BigInteger, primary_key=True, index=True)
+    system_id = db.Column(db.String(256), primary_key=True, index=True)
     # 総資産
     soushisan = db.Column(db.Integer, default = 0)
     create_at = db.Column(db.DateTime, default=datetime.now)
