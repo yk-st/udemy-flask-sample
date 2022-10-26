@@ -89,4 +89,6 @@ flask routes
 ```
 
 # actions
- https://hsmtweb.com/tool-service/github-actions.html
+docker exec -it udemy-flask-sample_app_api_1 /bin/bash -c "pytest tests/test_hoge.py -s"
+
+https://hsmtweb.com/tool-service/github-actions.html
