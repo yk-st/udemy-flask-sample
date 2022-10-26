@@ -3,7 +3,8 @@ from datetime import datetime
 from flask import Blueprint, flash
 from flask import render_template, request, redirect, url_for
 
-
+import jwt
+import os
 from apps.app import db, app
 from apps.pymodule.setting.models import MONEY
 from apps.pymodule.setting.froms import MoneyBasicForm
@@ -11,6 +12,35 @@ from apps.pymodule.setting.froms import MoneyBasicForm
 setting = Blueprint('setting', 
         __name__, 
         url_prefix='/setting')
+
+@setting.route('logout', methods=["GET", "POST"])
+def logout():
+
+    return redirect("https://udemy-flask-sample.top/oauth2/sign_out?rd=https%3A%2F%2Fauth.udemy-flask-sample.top%3A8443%2Frealms%2Fhogepeke%2Fprotocol%2Fopenid-connect%2Flogout/")
+
+@setting.route('logout', methods=["GET", "POST"])
+def check_jwt():
+    # JWTをデコードするためのパブリックキー
+    public_key_body = os.getenv('JWT_PUBLIC_KEY', '')
+    public_key = "-----BEGIN PUBLIC KEY-----\n" \
+                    + public_key_body \
+                    + "\n-----END PUBLIC KEY-----"
+
+    #   File "/usr/local/lib/python3.10/site-packages/jwt/api_jwt.py", line 234, in _validate_exp
+    #     raise ExpiredSignatureError("Signature has expired")
+    # jwt.exceptions.ExpiredSignatureError: Signature has expired
+    # [pid: 8|app: 0|req: 6/6] 172.16.0.3 () {66 vars in 6234 bytes} [Wed Sep 28 20:40:15 2022] GET /dashboard/ => generated 0 bytes in 11 msecs (HTTP/1.0 500) 0 headers in 0 bytes (0 switches on core 0)
+    # 例えば期限切れの場合はこんなログが出る
+    
+    # issureとaudienceもチェックを行う
+    sub = jwt.decode(
+        request.headers["X-Access-Token"],
+        public_key,
+        algorithms=["RS256"],
+        audience="audience",
+        issuer="https://udemy-flask-sample.top:8443/realms/hoegpeke")["sub"]
+
+    return sub
 
 @setting.route('/', methods=["GET", "POST"])
 def money():
