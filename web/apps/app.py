@@ -93,6 +93,9 @@ def create_app():
     from apps.pymodule.inqury import index as inqury_view
     app.register_blueprint(inqury_view.inqury)
 
+    from apps.pymodule.mislenious import index as mislenious_view
+    app.register_blueprint(mislenious_view.mislenious)
+
     return app
 
 @app.errorhandler(500)
