@@ -22,5 +22,6 @@ def test_landing(app):
     print(response.data)
     app.logger.debug(response.data)
     body = response.get_json()
-    assert body['system_id'] == "9d9d33e0-bb8f-4724-99d9-807cf8b91cdb"
+    print(body)
+    assert body['money']['system_id'] == "9d9d33e0-bb8f-4724-99d9-807cf8b91cdb"
     # Web画面は現状認証が入っているとテストが大変なので、
