@@ -27,5 +27,5 @@ PyJWT==2.5.0
 
 # フォーム
 Flask-WTF==1.0.1
-
+email-validator==1.2.1
 Flask-Mail==0.9.1
