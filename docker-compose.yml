@@ -51,6 +51,19 @@ services:
       - socket:/tmp
       - ./migrations/:/root/udemy-flask-sample/web/migrations
 
+  app_api:
+    build: ./api
+    networks:
+      - app_net
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
+    volumes:
+      - socket_api:/tmp_api
+
   #　データ保存Mysql
   mysql:
     build:

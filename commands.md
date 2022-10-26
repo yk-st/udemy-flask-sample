@@ -45,5 +45,23 @@ docker exec -it udemy-flask-sample_app_1 /bin/bash
 # サインアウト(Oauth2proxyからサインアウトしてその後にKeyCloakのサインアウト画面に遷移する)
 https://udemy-flask-sample.top/oauth2/sign_out?rd=https%3A%2F%2Fauth.udemy-flask-sample.top%3A8443%2Frealms%2Fhogepeke%2Fprotocol%2Fopenid-connect%2Flogout/
 
+# トークン取得系のコマンド
+curl -k -X POST \
+        -H "Content-Type: application/x-www-form-urlencoded" \
+        -d 'grant_type=client_credentials' \
+        -d "client_id=flasks" \
+        -d "client_secret=G6xqdoC33HytUhEi0vjvUgKMSGZ2QXYL" \
+         "https://auth.udemy-flask-sample.top:8443/realms/hogepeke/protocol/openid-connect/token"
+
+# トークンが有効化を確認する
+curl -k \
+     -X POST \
+     -u "flasks:G6xqdoC33HytUhEi0vjvUgKMSGZ2QXYL" \
+     -d "token=$TOKEN" \
+   "https://auth.udemy-flask-sample.top:8443/realms/hogepeke/protocol/openid-connect/token/introspect"
+
+# flaskのルート確認
+flask routes
+
 # actions
  https://hsmtweb.com/tool-service/github-actions.html
