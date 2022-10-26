@@ -28,7 +28,7 @@ class HUMAN_CAPTAL(db.Model):
         return HUMAN_CAPTAL.query.filter_by(system_id = self.system_id).first()
 
 
-class ONESTEP_MASTER(db.Model, UserMixin):
+class ONESTEP_MASTER(db.Model):
     __tablename__ = "onestep_master"
 
     onestep_id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
