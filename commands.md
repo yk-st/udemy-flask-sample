@@ -42,6 +42,8 @@ docker exec -it udemy-flask-sample_app_1 /bin/bash
 # keycloak 
  SSO session idle timeout変更
 
+# サインアウト
+https://udemy-flask-sample.top/oauth2/sign_out?rd=https://login.udemy-flask-sample.top:8443/realms/hogepeke/protocol/openid-connect/logout
 
 # actions
  https://hsmtweb.com/tool-service/github-actions.html

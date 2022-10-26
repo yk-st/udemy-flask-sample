@@ -4,7 +4,7 @@ from flask import Blueprint, flash
 from flask import render_template, request, redirect, url_for
 
 
-from apps.app import db
+from apps.app import db, app
 from apps.pymodule.setting.models import MONEY
 from apps.pymodule.setting.froms import MoneyBasicForm
 
@@ -14,6 +14,8 @@ setting = Blueprint('setting',
 
 @setting.route('/', methods=["GET", "POST"])
 def money():
+
+        app.logger.warning("hoge")
 
         # フォーム
         form = MoneyBasicForm()

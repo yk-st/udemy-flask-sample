@@ -54,10 +54,19 @@ def create_app():
 
     # configの設定を反映する
     app.config.from_object(Config())
+    # ログ
+    if os.getenv('ENV') == 'PROD':
+        app.debug = False
+        app.logger.setLevel(logging.INFO)
+    else:
+        app.debug = True
+        app.logger.setLevel(logging.DEBUG)
+
+    app.logger.warning("hoge")
 
     # CSRF対策
     csrf.init_app(app)
-    
+
     # databaseのインスタンスを作成する
     db.init_app(app)
     # Migration設定
