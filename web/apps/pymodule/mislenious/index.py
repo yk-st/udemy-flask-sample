@@ -9,7 +9,7 @@ from apps.pymodule.setting.index import check_jwt
 from apps.pymodule.mislenious.models import MANI_CAPITAL, SOCIAL_CAPITAL, HUMAN_CAPTAL, CHORES, ONESTEP_MASTER
 from apps.pymodule.mislenious.form import SocialSocialForm, human_basic_form_builder, MoneyBasicForm, ChoreForm
 
-setting = Blueprint('mislenious', 
+mislenious = Blueprint('mislenious', 
         __name__, 
         url_prefix='/mislenious')
 
@@ -27,7 +27,7 @@ class Gakureki():
                 ]
                 self.checked = 1
 
-@setting.route('/')
+@mislenious.route('/')
 def mislenious():
 
         form = SocialSocialForm()
@@ -50,7 +50,7 @@ def mislenious():
         moneyform = money()
 
         return render_template(
-                setting.name + "/" + "social_resource.html", 
+                mislenious.name + "/" + "social_resource.html", 
                 form=form,
                 humanform = humanform,
                 moneyform = moneyform)
@@ -151,7 +151,7 @@ def money():
         return form
 
 
-@setting.route('/save/mislenious/<page>', methods=["GET", "POST"])
+@mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_social(page):
 
         form = SocialSocialForm()
@@ -183,9 +183,9 @@ def save_social(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(setting.name + "/" + "social_resource.html", form=form)
+        return render_template(mislenious.name + "/" + "social_resource.html", form=form)
 
-@setting.route('/save/mislenious/<page>', methods=["GET", "POST"])
+@mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_human(page):
 
         oneseplist:ONESTEP_MASTER = None
@@ -239,9 +239,9 @@ def save_human(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(setting.name + "/" + "human_resource.html", form=form)
+        return render_template(mislenious.name + "/" + "human_resource.html", form=form)
 
-@setting.route('/save/mislenious/<page>', methods=["GET", "POST"])
+@mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_money(page):
 
         form:MoneyBasicForm = MoneyBasicForm()
@@ -291,4 +291,4 @@ def save_money(page):
         else:
                 flash("無効なフォーム送信です")
         
-        return render_template(setting.name + "/" + "money_resource.html", form=form)
+        return render_template(mislenious.name + "/" + "money_resource.html", form=form)
