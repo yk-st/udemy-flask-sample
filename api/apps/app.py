@@ -58,6 +58,10 @@ def create_app():
     # 使い方は実は変わらない
     app.register_blueprint(social_api.social)
 
+    from apps.pymodule.db import index as db_api
+    # 使い方は実は変わらない
+    app.register_blueprint(db_api.dbs)
+
     return app
 
 @app.errorhandler(500)
