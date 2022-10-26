@@ -35,7 +35,7 @@ resource_base['update_at'] = fields.String(readonly=True,
                         require=True)
 
 # モデル作成
-model = dbs.model('hoge', resource_base)
+model = dbs_nm.model('hoge', resource_base)
 
 # 以下レスポンス定義
 @dbs.route('/dbs')
