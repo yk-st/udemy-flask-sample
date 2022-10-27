@@ -227,13 +227,11 @@ def save_radio_checkbox(page):
                 if human_capital_record is None:
                         human_capital_record:CHECK_BOX = CHECK_BOX(
                                 system_id = check_jwt(),
-                                birth_day = checkboxform.birth_day.data,
                                 gakureki = checkboxform.gakureki_radio.data,
                                 onestep_staus = onestep_status,
                         )
                 else:   
                         human_capital_record.onestep_staus = onestep_status
-                        human_capital_record.birth_day = checkboxform.birth_day.data
                         human_capital_record.gakureki = checkboxform.gakureki_radio.data
 
                 # データベースへの反映(いまいち動かん。。)
