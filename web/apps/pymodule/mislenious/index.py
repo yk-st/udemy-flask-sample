@@ -152,7 +152,7 @@ def money():
         return form
 
 
-@mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
+@mislenious.route('/save/mislenious/basic/<page>', methods=["GET", "POST"])
 def save_form(page):
 
         basicform = BasicForm()
@@ -194,7 +194,7 @@ def save_form(page):
                 checkboxform = checkboxform,
                 moneyform = moneyform)
 
-@mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
+@mislenious.route('/save/mislenious/radio/<page>', methods=["GET", "POST"])
 def save_radio_checkbox(page):
 
         oneseplist:ONESTEP_MASTER = None
@@ -253,7 +253,7 @@ def save_radio_checkbox(page):
                 checkboxform = checkboxform,
                 moneyform = moneyform)
 
-@mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
+@mislenious.route('/save/mislenious/money/<page>', methods=["GET", "POST"])
 def save_form_list(page):
 
         moenyform:MoneyBasicForm = MoneyBasicForm()
