@@ -56,21 +56,21 @@
                             <div class="container">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active text-uppercase" id="okozukai-tab" data-toggle="tab" href="#okozukai" role="tab" aria-controls="okozukai" aria-selected="true">お小遣い設定</a>
+                                        <a class="nav-link active text-uppercase" id="okozukai-tab" data-toggle="tab" href="#okozukai" role="tab" aria-controls="okozukai" aria-selected="true">formの繰り返し</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-uppercase" id="mani-tab" data-toggle="tab" href="#manisetting" role="tab" aria-controls="mani" aria-selected="false">マニ設定</a>
+                                        <a class="nav-link text-uppercase" id="mani-tab" data-toggle="tab" href="#manisetting" role="tab" aria-controls="mani" aria-selected="false">radio_check</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-uppercase" id="hoge-tab" data-toggle="tab" href="#hoge" role="tab" aria-controls="mani" aria-selected="false">雑多</a>
+                                        <a class="nav-link text-uppercase" id="hoge-tab" data-toggle="tab" href="#hoge" role="tab" aria-controls="mani" aria-selected="false">input_form</a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="container">
                                 <div class="tab-content" id="myTabContent">
                                     {% include 'mislenious/money_tab/money_form.html' %}
-                                    {% include 'mislenious/money_tab/social.html' %}
-                                    {% include 'mislenious/money_tab/human.html' %}
+                                    {% include 'mislenious/money_tab/input_form.html' %}
+                                    {% include 'mislenious/money_tab/radio_check.html' %}
                                 </div>
                             </div>
                         </div>
