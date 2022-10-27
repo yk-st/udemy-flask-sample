@@ -8,7 +8,7 @@ from apps.app import db
 class CHECK_BOX(db.Model):
     __tablename__ = "check_box"
 
-    system_id = db.Column(db.BigInteger , primary_key=True)
+    system_id = db.Column(db.String(256) , primary_key=True)
     birth_day = db.Column(db.DateTime)
     gakureki = db.Column(db.Integer)
     # onestep_id:True,False
@@ -36,7 +36,7 @@ class ONESTEP_MASTER(db.Model):
 class OTOMODATI(db.Model):
     __tablename__ = "otomodati"
 
-    system_id = db.Column(db.BigInteger , primary_key=True)
+    system_id = db.Column(db.String(256) , primary_key=True)
     friend_internal = db.Column(db.Integer, default=0)
     friend_external =  db.Column(db.Integer, default=0)
     social_score = db.Column(db.BigInteger)
@@ -49,7 +49,7 @@ class OTOMODATI(db.Model):
 class MONEY_ALL(db.Model):
     __tablename__ = "moneyall"
 
-    system_id = db.Column(db.BigInteger , primary_key=True)
+    system_id = db.Column(db.String(256) , primary_key=True)
     # 現状いくら持っているか
     mani = db.Column(db.BigInteger)
     create_at = db.Column(db.DateTime, default=datetime.now)
@@ -64,7 +64,7 @@ class CHORES(db.Model):
 
     chore_id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     # TODO 外部キー
-    system_id = db.Column(db.BigInteger, primary_key=True, index=True)
+    system_id = db.Column(db.String(256), primary_key=True, index=True)
     # chore:mani
     chore_mani = db.Column(db.JSON())
     create_at = db.Column(db.DateTime, default=datetime.now)
