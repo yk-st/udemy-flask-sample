@@ -37,12 +37,12 @@ def index():
                 system_id = check_jwt()
         )
 
-        user_social_capital:OTOMODATI = otomodati.get_record()
+        user_otomodati:OTOMODATI = otomodati.get_record()
 
         # レコードが撮れた場合は初期とを設定
-        if user_social_capital is not None:
-                form.frends_external.data = user_social_capital.friend_external
-                form.frends_internal.data = user_social_capital.friend_internal
+        if user_otomodati is not None:
+                form.frends_external.data = user_otomodati.friend_external
+                form.frends_internal.data = user_otomodati.friend_internal
 
         # humanタブデータ
         checkboxform = checkbox()
@@ -159,21 +159,21 @@ def save_social(page):
                         system_id = check_jwt()
                 )
 
-                user_social_capital:OTOMODATI = otomodati.get_record()
+                user_otomodati:OTOMODATI = otomodati.get_record()
 
                 # 登録データが存在していない場合
-                if user_social_capital is None:
-                        user_social_capital = OTOMODATI(
+                if user_otomodati is None:
+                        user_otomodati = OTOMODATI(
                                 system_id = check_jwt(),
                                 friend_internal = form.frends_internal.data,
                                 friend_external = form.frends_external.data,
                                 social_score = 10
                         )
                 else:
-                        user_social_capital.friend_internal = form.frends_internal.data,
-                        user_social_capital.friend_external = form.frends_external.data,
+                        user_otomodati.friend_internal = form.frends_internal.data,
+                        user_otomodati.friend_external = form.frends_external.data,
 
-                db.session.add(user_social_capital)
+                db.session.add(user_otomodati)
                 db.session.commit()
 
                 flash("データが保存されました。")
