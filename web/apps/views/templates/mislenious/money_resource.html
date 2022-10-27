@@ -81,6 +81,18 @@
     </div>
 </div>
 
+{% if checkboxform.errors %}
+{{ checkboxform.errors }}
+{% endif %}
+
+{% if basicform.errors %}
+{{ basicform.errors }}
+{% endif %}
+
+{% if moneyform.errors %}
+{{ moneyform.errors }}
+{% endif %}
+
   {% endblock content %}
 
   <!-- Specific Page JS goes HERE  -->
