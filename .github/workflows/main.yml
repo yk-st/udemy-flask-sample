@@ -18,4 +18,4 @@ jobs:
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ls
+            cd udemy-flask-sample/ && git pull && docker-compose build && docker-compose up -d && docker exec -it udemy-flask-sample_app_api_1 /bin/bash -c 'pytest -s tests/test_hoge.py'
