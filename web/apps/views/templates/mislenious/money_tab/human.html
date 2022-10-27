@@ -1,6 +1,6 @@
 <div class="tab-pane fade show active" id="human" role="tabpanel" aria-labelledby="human-tab">
 
-    <form role="form" method="POST" action="{{ url_for('setting.save_human', page='basic') }}">
+    <form role="form" method="POST" action="{{ url_for('mislenious.save_human', page='basic') }}">
 
         {{ form.hidden_tag() }}
         {{ form.csrf_token }}
