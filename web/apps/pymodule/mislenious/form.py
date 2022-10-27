@@ -24,12 +24,6 @@ class HumanBasicFormBase(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(HumanBasicFormBase, self).__init__(*args, **kwargs)
 
-    # 日付フォーマットも可能
-    birth_day = DateField('birth_day',
-                         id='birth_day',
-                         format='%Y-%m-%d',
-                         validators=[])
-
 def checkbox_builder(onesteplist, gakurekiClass):
 
     class HumanBasicForm(HumanBasicFormBase):
