@@ -5,12 +5,11 @@ from datetime import datetime, date
 
 from apps.app import db
 
-class HUMAN_CAPTAL(db.Model):
-    __tablename__ = "human_capital"
+class CHECK_BOX(db.Model):
+    __tablename__ = "check_box"
 
     system_id = db.Column(db.BigInteger , primary_key=True)
     birth_day = db.Column(db.DateTime)
-    age = db.Column(db.Integer)
     gakureki = db.Column(db.Integer)
     # onestep_id:True,False
     onestep_staus = db.Column(db.JSON())
@@ -18,14 +17,8 @@ class HUMAN_CAPTAL(db.Model):
     create_at = db.Column(db.DateTime, default=datetime.now)
     update_at = db.Column(db.DateTime, default=datetime.now)
 
-    def birth2age(self):
-        today = date.today()
-        # 誕生日から現在の年齢を計算
-        #self.age = (int(today.strftime("%Y%m%d")) - int(self.birth_day.strftime("%Y%m%d"))) 
-        self.age = 11
-
     def get_record(self):
-        return HUMAN_CAPTAL.query.filter_by(system_id = self.system_id).first()
+        return CHECK_BOX.query.filter_by(system_id = self.system_id).first()
 
 
 class ONESTEP_MASTER(db.Model):
@@ -40,8 +33,8 @@ class ONESTEP_MASTER(db.Model):
     def getall():
         return ONESTEP_MASTER.query.all()
 
-class SOCIAL_CAPITAL(db.Model):
-    __tablename__ = "social_capital"
+class OTOMODATI(db.Model):
+    __tablename__ = "otomodati"
 
     system_id = db.Column(db.BigInteger , primary_key=True)
     friend_internal = db.Column(db.Integer, default=0)
@@ -51,52 +44,19 @@ class SOCIAL_CAPITAL(db.Model):
     update_at = db.Column(db.DateTime, default=datetime.now)
 
     def get_record(self):
-        return SOCIAL_CAPITAL.query.filter_by(system_id = self.system_id).first()
+        return OTOMODATI.query.filter_by(system_id = self.system_id).first()
 
-class MANI_CAPITAL(db.Model):
-    __tablename__ = "mani_capital"
+class MONEY_ALL(db.Model):
+    __tablename__ = "moneyall"
 
     system_id = db.Column(db.BigInteger , primary_key=True)
-    okozukai_date = db.Column(db.String(64))
-    okozukai = db.Column(db.BigInteger)
-    mani_score = db.Column(db.BigInteger)
     # 現状いくら持っているか
     mani = db.Column(db.BigInteger)
     create_at = db.Column(db.DateTime, default=datetime.now)
     update_at = db.Column(db.DateTime, default=datetime.now)
 
     def get_record(self):
-        return MANI_CAPITAL.query.filter_by(system_id = self.system_id).first()
-
-# maniの収支を管理するテーブル
-class MANI(db.Model):
-    __tablename__ = "mani"
-
-    mani_id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
-    # TODO 外部キー
-    system_id = db.Column(db.BigInteger, primary_key=True, index=True)
-    # Type 毎月のお小遣い:1、お手伝いによるもの:2、運用による損益:3
-    earn_type = db.Column(db.Integer, default = None)
-    # いくらもらったか
-    earned =  db.Column(db.BigInteger, default = 0)
-    # 何でいくらもらったか
-    earn_from = db.Column(db.String(256), default = None)
-    # expense 交換した:1
-    expense_type = db.Column(db.Integer, default = None)
-    # いくら使ったか
-    expense = db.Column(db.BigInteger, default = 0)
-    # 何に使ったか
-    expense_to = db.Column(db.String(256), default = None)
-    create_at = db.Column(db.DateTime, default=datetime.now)
-    update_at = db.Column(db.DateTime, default=datetime.now)
-
-    def get_today_mani(self):
-
-        sql = text("""
-            select sum(earned) as earn from moneys.mani where system_id = :system_id and update_at >= CURDATE()
-            """).bindparams(bindparam('system_id', self.system_id))
-
-        return db.session.execute(sql).first()
+        return MONEY_ALL.query.filter_by(system_id = self.system_id).first()
 
 # お手伝い
 class CHORES(db.Model):

@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, IntegerField, DateField, RadioField, FormField, FieldList, SelectField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 
-class SocialSocialForm(FlaskForm):
+class CheckBoxForm(FlaskForm):
     frends_internal = IntegerField('internal_friend',
                          id='internal_friend',
                          validators=[
@@ -28,7 +28,7 @@ class HumanBasicFormBase(FlaskForm):
                          format='%Y-%m-%d',
                          validators=[])
 
-def human_basic_form_builder(onesteplist, gakurekiClass):
+def checkbox_builder(onesteplist, gakurekiClass):
 
     class HumanBasicForm(HumanBasicFormBase):
         pass
@@ -68,14 +68,12 @@ class ChoreForm(FlaskForm):
         super(ChoreForm, self).__init__(*args, **kwargs)
 
     chore = StringField('chore', default=None, validators=[])
-    mani = IntegerField('mani', default=0, validators=[])
+    okozukai = IntegerField('okozukai', default=0, validators=[])
 
 class MoneyBasicForm(FlaskForm):
 
-    # Okozukai
-    kozukaidate = SelectField('kozukaidate', choices=[('1', '1日')], validators=[DataRequired()])
-    # okozukai mani
-    kozukaimani = IntegerField('mani', default=0, validators=[DataRequired()])
+    # okozukai
+    okozukai = IntegerField('okozukai', default=0, validators=[DataRequired()])
 
     # お手伝いリスト(return list dict)
     # リストを作る時にはフィールドリスト（フォームを複数個使う場合）

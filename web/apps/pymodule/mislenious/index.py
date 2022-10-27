@@ -6,8 +6,8 @@ import logging
 
 from apps.app import db
 from apps.pymodule.setting.index import check_jwt
-from apps.pymodule.mislenious.models import MANI_CAPITAL, SOCIAL_CAPITAL, HUMAN_CAPTAL, CHORES, ONESTEP_MASTER
-from apps.pymodule.mislenious.form import SocialSocialForm, human_basic_form_builder, MoneyBasicForm, ChoreForm
+from apps.pymodule.mislenious.models import MONEY_ALL, OTOMODATI, CHECK_BOX, CHORES, ONESTEP_MASTER
+from apps.pymodule.mislenious.form import CheckBoxForm, checkbox_builder, MoneyBasicForm, ChoreForm
 
 mislenious = Blueprint('mislenious', 
         __name__, 
@@ -30,14 +30,14 @@ class Gakureki():
 @mislenious.route('/')
 def index():
 
-        form = SocialSocialForm()
+        form = CheckBoxForm()
 
         # 初期値の設定を行う
-        social_captal = SOCIAL_CAPITAL(
+        otomodati = OTOMODATI(
                 system_id = check_jwt()
         )
 
-        user_social_capital:SOCIAL_CAPITAL = social_captal.get_record()
+        user_social_capital:OTOMODATI = otomodati.get_record()
 
         # レコードが撮れた場合は初期とを設定
         if user_social_capital is not None:
@@ -57,12 +57,12 @@ def index():
 
 def human():
 
-        human_captal = HUMAN_CAPTAL(
+        check_box = CHECK_BOX(
                 system_id = check_jwt()
         )
 
         # 既に登録データがあるかチェック
-        user_human_captal:HUMAN_CAPTAL = human_captal.get_record()
+        user_check_box:CHECK_BOX = check_box.get_record()
 
         onestep_master:ONESTEP_MASTER = ONESTEP_MASTER.getall()
 
@@ -70,10 +70,10 @@ def human():
         form = None
 
         # 初回登録以外
-        if user_human_captal is not None:
+        if user_check_box is not None:
 
                 #List dic形式
-                for onestep in user_human_captal.onestep_staus:
+                for onestep in user_check_box.onestep_staus:
                         for master in onestep_master:
                                 # キーが一緒のものを取得
                                 if onestep["onestep_id"] == str(master.onestep_id):
@@ -88,13 +88,13 @@ def human():
 
                 # 学歴オブジェクトの作成
                 gakurekiClass = Gakureki()
-                gakurekiClass.checked = user_human_captal.gakureki
+                gakurekiClass.checked = user_check_box.gakureki
 
-                #人的資本はビルダーでビルドする
-                form = human_basic_form_builder(onesteplist, gakurekiClass)
+                #チェックボックス
+                form = checkbox_builder(onesteplist, gakurekiClass)
 
                 # 誕生日
-                form.birth_day.data = user_human_captal.birth_day
+                form.birth_day.data = user_check_box.birth_day
 
         else:
                 # マスターからのデータを利用する
@@ -102,8 +102,8 @@ def human():
                 
                 # 学歴オブジェクトの作成
                 gakurekiClass = Gakureki()
-                #人的資本はビルダーでビルドする
-                form = human_basic_form_builder(onesteplist, gakurekiClass)
+                #チェックボックス
+                form = checkbox_builder(onesteplist, gakurekiClass)
 
         return form
 
@@ -111,11 +111,11 @@ def money():
 
         form = MoneyBasicForm()
 
-        mani_captal:MANI_CAPITAL = MANI_CAPITAL(
+        money_all:MONEY_ALL = MONEY_ALL(
                 system_id = check_jwt()
         )
 
-        mani_captal_record:MANI_CAPITAL = mani_captal.get_record()
+        money_all_record:MONEY_ALL = money_all.get_record()
 
         # お手伝いテーブルの取得
         chores:CHORES = CHORES(
@@ -125,10 +125,10 @@ def money():
         chores_record:CHORES = chores.get_record()
 
         # 既に登録データが存在する場合は初期フォームに設定
-        if mani_captal_record is not None:
+        if money_all_record is not None:
 
-                form.kozukaidate.data = mani_captal_record.okozukai_date
-                form.kozukaimani.data = mani_captal_record.okozukai
+                form.kozukaidate.data = money_all_record.okozukai_date
+                form.kozukaimani.data = money_all_record.okozukai
                 # お手伝いリスト
                 # form.chorelist.data = chores_record.chore_maniはできないのでappend_entryする
                 for chore in chores_record.chore_mani:
@@ -154,19 +154,19 @@ def money():
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_social(page):
 
-        form = SocialSocialForm()
+        form = CheckBoxForm()
 
         if request.method == "POST" and form.validate_on_submit():
 
-                social_captal = SOCIAL_CAPITAL(
+                otomodati = OTOMODATI(
                         system_id = check_jwt()
                 )
 
-                user_social_capital:SOCIAL_CAPITAL = social_captal.get_record()
+                user_social_capital:OTOMODATI = otomodati.get_record()
 
                 # 登録データが存在していない場合
                 if user_social_capital is None:
-                        user_social_capital = SOCIAL_CAPITAL(
+                        user_social_capital = OTOMODATI(
                                 system_id = check_jwt(),
                                 friend_internal = form.frends_internal.data,
                                 friend_external = form.frends_external.data,
@@ -195,7 +195,7 @@ def save_human(page):
         gakurekiClass = Gakureki()
 
         #人的資本はビルダーでビルドしつつデータを保管してゆく
-        form = human_basic_form_builder(oneseplist, gakurekiClass)
+        form = checkbox_builder(oneseplist, gakurekiClass)
 
         if request.method == "POST" and form.validate_on_submit():
 
@@ -207,29 +207,25 @@ def save_human(page):
                                 "onestep_id": onestep.split(":")[1] ,
                                 "checked": form[onestep].data})
 
-                human_captal:HUMAN_CAPTAL = HUMAN_CAPTAL(
+                check_box:CHECK_BOX = CHECK_BOX(
                         system_id = check_jwt()
                 )
 
                 # 人的資本取得
-                human_capital_record:HUMAN_CAPTAL = human_captal.get_record()   
+                human_capital_record:CHECK_BOX = check_box.get_record()   
 
                 # 初期登録の場合
                 if human_capital_record is None:
-                        human_capital_record:HUMAN_CAPTAL = HUMAN_CAPTAL(
+                        human_capital_record:CHECK_BOX = CHECK_BOX(
                                 system_id = check_jwt(),
                                 birth_day = form.birth_day.data,
                                 gakureki = form.gakureki_radio.data,
                                 onestep_staus = onestep_status,
-                                human_score = 10,
-                                # TODO 年齢の計算
-                                age = 11
                         )
                 else:   
                         human_capital_record.onestep_staus = onestep_status
                         human_capital_record.birth_day = form.birth_day.data
                         human_capital_record.gakureki = form.gakureki_radio.data
-                        human_capital_record.human_score = 11
 
                 # データベースへの反映(いまいち動かん。。)
                 db.session.add(human_capital_record)
@@ -248,11 +244,11 @@ def save_money(page):
 
         if request.method == "POST" and form.validate_on_submit():
 
-                mani_captal:MANI_CAPITAL = MANI_CAPITAL(
+                money_all:MONEY_ALL = MONEY_ALL(
                         system_id = check_jwt()
                 )
 
-                mani_captal_record:MANI_CAPITAL = mani_captal.get_record()
+                money_all_record:MONEY_ALL = money_all.get_record()
 
                 # お手伝いテーブルの登録
                 chores:CHORES = CHORES(
@@ -262,12 +258,11 @@ def save_money(page):
                 chores_record:CHORES = chores.get_record()
 
                 # 初回登録の場合
-                if mani_captal_record is None:
-                        mani_captal_record = MANI_CAPITAL(
+                if money_all_record is None:
+                        money_all_record = MONEY_ALL(
                                 system_id = check_jwt(),
                                 okozukai = form.kozukaimani.data,
-                                okozukai_date = form.kozukaidate.data,
-                                mani_score = 10
+                                okozukai_date = form.kozukaidate.data
                         )
 
                         chores_record = CHORES(
@@ -276,13 +271,12 @@ def save_money(page):
                         )
                 else:
 
-                        mani_captal_record.okozukai_date = form.kozukaidate.data,
-                        mani_captal_record.okozukai = form.kozukaimani.data
-                        mani_captal_record.mani_score = 11
+                        money_all_record.okozukai_date = form.kozukaidate.data,
+                        money_all_record.okozukai = form.kozukaimani.data
 
                         chores_record.chore_mani = form.chorelist.data
                 
-                db.session.add(mani_captal_record)
+                db.session.add(money_all_record)
                 db.session.add(chores_record)
                 db.session.commit()
 
