@@ -134,7 +134,7 @@ def money():
                         choreobj = ChoreForm()
                         # デフォルト値を変更する
                         choreobj.chore = chore["chore"]
-                        choreobj.okozukai = chore["mani"]
+                        choreobj.okozukai = chore["okozukai"]
                         # max で append するとエラー
                         form.chorelist.append_entry(choreobj)
         else:
