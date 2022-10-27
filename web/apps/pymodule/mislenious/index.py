@@ -275,8 +275,6 @@ def save_form_list(page):
                 if money_all_record is None:
                         money_all_record = MONEY_ALL(
                                 system_id = check_jwt(),
-                                okozukai = moenyform.kozukaimani.data,
-                                okozukai_date = moenyform.kozukaidate.data
                         )
 
                         chores_record = CHORES(
@@ -284,10 +282,6 @@ def save_form_list(page):
                                 chore_mani = moenyform.chorelist.data
                         )
                 else:
-
-                        money_all_record.okozukai_date = moenyform.kozukaidate.data,
-                        money_all_record.okozukai = moenyform.kozukaimani.data
-
                         chores_record.chore_mani = moenyform.chorelist.data
                 
                 db.session.add(money_all_record)
