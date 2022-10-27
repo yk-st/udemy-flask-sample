@@ -7,7 +7,7 @@ import logging
 from apps.app import db
 from apps.pymodule.setting.index import check_jwt
 from apps.pymodule.mislenious.models import MONEY_ALL, OTOMODATI, CHECK_BOX, CHORES, ONESTEP_MASTER
-from apps.pymodule.mislenious.form import CheckBoxForm, checkbox_builder, MoneyBasicForm, ChoreForm
+from apps.pymodule.mislenious.form import BasicForm, checkbox_builder, MoneyBasicForm, ChoreForm
 
 mislenious = Blueprint('mislenious', 
         __name__, 
@@ -30,8 +30,21 @@ class Gakureki():
 @mislenious.route('/')
 def index():
 
-        form = CheckBoxForm()
+        basicform = basic()
+        # humanタブデータ
+        checkboxform = checkbox()
+        # 
+        moneyform = money()
 
+        return render_template(
+                mislenious.name + "/" + "money_resource.html", 
+                basicform=basicform,
+                checkboxform = checkboxform,
+                moneyform = moneyform)
+
+def basic():
+
+        form = BasicForm()
         # 初期値の設定を行う
         otomodati = OTOMODATI(
                 system_id = check_jwt()
@@ -44,16 +57,7 @@ def index():
                 form.frends_external.data = user_otomodati.friend_external
                 form.frends_internal.data = user_otomodati.friend_internal
 
-        # humanタブデータ
-        checkboxform = checkbox()
-        # 
-        moneyform = money()
-
-        return render_template(
-                mislenious.name + "/" + "money_resource.html", 
-                form=form,
-                checkboxform = checkboxform,
-                moneyform = moneyform)
+        return form
 
 def checkbox():
 
@@ -151,9 +155,9 @@ def money():
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_form(page):
 
-        form = CheckBoxForm()
+        basicform = BasicForm()
 
-        if request.method == "POST" and form.validate_on_submit():
+        if request.method == "POST" and basicform.validate_on_submit():
 
                 otomodati = OTOMODATI(
                         system_id = check_jwt()
@@ -165,13 +169,13 @@ def save_form(page):
                 if user_otomodati is None:
                         user_otomodati = OTOMODATI(
                                 system_id = check_jwt(),
-                                friend_internal = form.frends_internal.data,
-                                friend_external = form.frends_external.data,
+                                friend_internal = basicform.frends_internal.data,
+                                friend_external = basicform.frends_external.data,
                                 social_score = 10
                         )
                 else:
-                        user_otomodati.friend_internal = form.frends_internal.data,
-                        user_otomodati.friend_external = form.frends_external.data,
+                        user_otomodati.friend_internal = basicform.frends_internal.data,
+                        user_otomodati.friend_external = basicform.frends_external.data,
 
                 db.session.add(user_otomodati)
                 db.session.commit()
@@ -180,7 +184,15 @@ def save_form(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(mislenious.name + "/" + "money_resource.html", form=form)
+        # 他のタブのデータ
+        checkboxform = checkbox()
+        moneyform = money()
+
+        return render_template(
+                mislenious.name + "/" + "money_resource.html",
+                basicform=basicform,
+                checkboxform = checkboxform,
+                moneyform = moneyform)
 
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_radio_checkbox(page):
@@ -192,17 +204,17 @@ def save_radio_checkbox(page):
         gakurekiClass = Gakureki()
 
         #ビルダーでビルドしつつデータを保管してゆく
-        form = checkbox_builder(oneseplist, gakurekiClass)
+        checkboxform = checkbox_builder(oneseplist, gakurekiClass)
 
-        if request.method == "POST" and form.validate_on_submit():
+        if request.method == "POST" and checkboxform.validate_on_submit():
 
                 onestep_status = []
                 # onestep statusの作成
-                for onestep in form.onestep_checkbox:
-                        print(form[onestep])
+                for onestep in checkboxform.onestep_checkbox:
+                        print(checkboxform[onestep])
                         onestep_status.append({
                                 "onestep_id": onestep.split(":")[1] ,
-                                "checked": form[onestep].data})
+                                "checked": checkboxform[onestep].data})
 
                 check_box:CHECK_BOX = CHECK_BOX(
                         system_id = check_jwt()
@@ -215,14 +227,14 @@ def save_radio_checkbox(page):
                 if human_capital_record is None:
                         human_capital_record:CHECK_BOX = CHECK_BOX(
                                 system_id = check_jwt(),
-                                birth_day = form.birth_day.data,
-                                gakureki = form.gakureki_radio.data,
+                                birth_day = checkboxform.birth_day.data,
+                                gakureki = checkboxform.gakureki_radio.data,
                                 onestep_staus = onestep_status,
                         )
                 else:   
                         human_capital_record.onestep_staus = onestep_status
-                        human_capital_record.birth_day = form.birth_day.data
-                        human_capital_record.gakureki = form.gakureki_radio.data
+                        human_capital_record.birth_day = checkboxform.birth_day.data
+                        human_capital_record.gakureki = checkboxform.gakureki_radio.data
 
                 # データベースへの反映(いまいち動かん。。)
                 db.session.add(human_capital_record)
@@ -232,14 +244,21 @@ def save_radio_checkbox(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(mislenious.name + "/" + "money_resource.html", checkboxform=form)
+        basic_form = basic_form()
+        moneyform = money()
+
+        return render_template(
+                mislenious.name + "/" + "money_resource.html",
+                basic_form=basic_form,
+                checkboxform = checkboxform,
+                moneyform = moneyform)
 
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_form_list(page):
 
-        form:MoneyBasicForm = MoneyBasicForm()
+        moenyform:MoneyBasicForm = MoneyBasicForm()
 
-        if request.method == "POST" and form.validate_on_submit():
+        if request.method == "POST" and moenyform.validate_on_submit():
 
                 money_all:MONEY_ALL = MONEY_ALL(
                         system_id = check_jwt()
@@ -258,20 +277,20 @@ def save_form_list(page):
                 if money_all_record is None:
                         money_all_record = MONEY_ALL(
                                 system_id = check_jwt(),
-                                okozukai = form.kozukaimani.data,
-                                okozukai_date = form.kozukaidate.data
+                                okozukai = moenyform.kozukaimani.data,
+                                okozukai_date = moenyform.kozukaidate.data
                         )
 
                         chores_record = CHORES(
                                 system_id = check_jwt(),
-                                chore_mani = form.chorelist.data
+                                chore_mani = moenyform.chorelist.data
                         )
                 else:
 
-                        money_all_record.okozukai_date = form.kozukaidate.data,
-                        money_all_record.okozukai = form.kozukaimani.data
+                        money_all_record.okozukai_date = moenyform.kozukaidate.data,
+                        money_all_record.okozukai = moenyform.kozukaimani.data
 
-                        chores_record.chore_mani = form.chorelist.data
+                        chores_record.chore_mani = moenyform.chorelist.data
                 
                 db.session.add(money_all_record)
                 db.session.add(chores_record)
@@ -282,4 +301,11 @@ def save_form_list(page):
         else:
                 flash("無効なフォーム送信です")
         
-        return render_template(mislenious.name + "/" + "money_resource.html", moneyform=form)
+        checkboxform = checkbox()
+        basicform = basic()
+
+        return render_template(
+                mislenious.name + "/" + "money_resource.html",
+                basicform=basicform,
+                checkboxform = checkboxform,
+                moneyform = moenyform)

@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, IntegerField, DateField, RadioField, FormField, FieldList, SelectField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 
-class CheckBoxForm(FlaskForm):
+class BasicForm(FlaskForm):
     frends_internal = IntegerField('internal_friend',
                          id='internal_friend',
                          validators=[
