@@ -242,12 +242,12 @@ def save_radio_checkbox(page):
         else:
                 flash("無効なフォーム送信です")
 
-        basic_form = basic()
+        basicform = basic()
         moneyform = money()
 
         return render_template(
                 mislenious.name + "/" + "money_resource.html",
-                basic_form=basic_form,
+                basicform=basicform,
                 checkboxform = checkboxform,
                 moneyform = moneyform)
 
