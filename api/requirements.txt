@@ -11,6 +11,8 @@ uWSGI==2.0.20
 #Flask-Dance==6.1.1
 PyMySQL==1.0.2
 
+python-keycloak==2.5.0
+
 # テスト
 pytest==7.1.3
 tavern==1.23.3
