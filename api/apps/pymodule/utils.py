@@ -33,12 +33,14 @@ def check_token(func):
                 #     algorithms=["RS256"],
                 #     audience="flasks",
                 #     issuer="https://auth.udemy-flask-sample.top:8443/realms/hogepeke")
+                # expireのチェックなども入れる
 
                 #　イントロスペクションを行うエンドポイントを追加するとよりベター
                 token_info = keycloak_openid.introspect(request.headers["X-Access-Token"])
 
                 # アクティブじゃない場合はNg
                 if not token_info['active']:
+                    print("NGです。")
                     api.abort(403)
 
                 #print(token_info)
