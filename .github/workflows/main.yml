@@ -59,4 +59,6 @@ jobs:
             export MAIL_USERNAME=flaks.udemy@gmail.com
             export MAIL_PASSWORD=lvknbziasyiqcvea
 
-            cd udemy-flask-sample/ && git pull && docker-compose build && docker-compose up -d && docker exec -it udemy-flask-sample_app_api_1 /bin/bash -c 'pytest -s tests/test_hoge.py'
+            cd udemy-flask-sample/ && git pull && docker-compose build && docker-compose up -d
+            
+            docker exec -it udemy-flask-sample_app_api_1 /bin/bash -c 'pytest -s tests/test_hoge.py'
