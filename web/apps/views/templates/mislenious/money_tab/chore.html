@@ -4,30 +4,11 @@
         {{ form.hidden_tag() }}
         {{ form.csrf_token }}
 
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="card-body">
-                        <h5>お小遣いは？</h5>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card-body">
-                        <div class="input-group mb-3">
-                            {{ form.kozukaimani(placeholder="100", class="form-control", **{ "aria-label":"Recipient's username", "aria-describedby":"basic-addon3"}) }}
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="basic-addon3">マニ</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="roots" class="container">
             <div class="row">
                 <div class="col">
                     <div class="card-body">
-                        <h5>どのようなお手伝いをお願いする(最大15個まで)？
+                        <h5>お手伝いとお小遣い
                             <button type="button" class="btn btn-info" title="{{ default_chore }}" data-toggle="tooltip" data-html="true"　data-placement="left">
                                 ?
                             </button>
