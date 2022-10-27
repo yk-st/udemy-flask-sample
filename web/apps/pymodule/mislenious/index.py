@@ -50,7 +50,7 @@ def index():
         moneyform = money()
 
         return render_template(
-                mislenious.name + "/" + "social_resource.html", 
+                mislenious.name + "/" + "moeny_resource.html", 
                 form=form,
                 humanform = humanform,
                 moneyform = moneyform)
@@ -183,7 +183,7 @@ def save_social(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(mislenious.name + "/" + "social_resource.html", form=form)
+        return render_template(mislenious.name + "/" + "moeny_resource.html", form=form)
 
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_human(page):
@@ -235,7 +235,7 @@ def save_human(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(mislenious.name + "/" + "human_resource.html", form=form)
+        return render_template(mislenious.name + "/" + "money_resource.html", form=form)
 
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
 def save_money(page):
