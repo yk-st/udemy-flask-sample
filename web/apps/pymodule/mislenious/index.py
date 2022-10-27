@@ -299,6 +299,7 @@ def save_form_list(page):
                 flash("登録が完了しました")
                 
         else:
+                print("ここ？")
                 flash("無効なフォーム送信です")
         
         checkboxform = checkbox()
