@@ -63,7 +63,7 @@ curl -k \
 # flaskのルート確認
 flask routes
 
-# 返却したいAPI
+# 返却したいJSON
 ```
 {
     "resource": {
