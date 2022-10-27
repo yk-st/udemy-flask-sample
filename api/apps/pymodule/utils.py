@@ -4,6 +4,12 @@ import jwt
 import os
 from apps.app import api
 from functools import wraps
+from keycloak import KeycloakOpenID
+
+keycloak_openid = KeycloakOpenID(server_url="https://auth.udemy-flask-sample.top:8443",
+                                 client_id="flasks",
+                                 realm_name="hogepeke",
+                                 client_secret_key=os.getenv('CLIENT_SECRET', ''))
 
 def check_token(func):
 
@@ -20,15 +26,17 @@ def check_token(func):
                             + "\n-----END PUBLIC KEY-----"
             try:
 
-                # キーがデコードできるかチェックする(ローカルチェック)
-                jwt.decode(
-                    request.headers["X-Access-Token"],
-                    public_key,
-                    algorithms=["RS256"],
-                    audience="flasks",
-                    issuer="https://auth.udemy-flask-sample.top:8443/realms/hogepeke")["sub"]
+                # キーがデコードできるかチェックする(ローカルチェックでもOKだが)
+                # jwt.decode(
+                #     request.headers["X-Access-Token"],
+                #     public_key,
+                #     algorithms=["RS256"],
+                #     audience="flasks",
+                #     issuer="https://auth.udemy-flask-sample.top:8443/realms/hogepeke")
 
                 #　イントロスペクションを行うエンドポイントを追加するとよりベター
+                token_info = keycloak_openid.introspect(request.headers["X-Access-Token"])
+                print(token_info)
 
             except Exception as e:
                 print(e)
