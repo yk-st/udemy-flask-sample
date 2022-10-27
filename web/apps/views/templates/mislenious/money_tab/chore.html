@@ -1,8 +1,8 @@
 <div class="tab-pane fade show active" id="okozukai" role="tabpanel" aria-labelledby="okozukai-tab">
     <form role="form" method="POST" action="{{ url_for('mislenious.save_money', page='basic') }}">
 
-        {{ form.hidden_tag() }}
-        {{ form.csrf_token }}
+        {{ moneyform.hidden_tag() }}
+        {{ moneyform.csrf_token }}
 
         <div id="roots" class="container">
             <div class="row">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            {% for chore in form.chorelist %}            
+            {% for chore in moneyform.chorelist %}            
             <div class="row">
                 <div class="col">
                     <div class="card-body">
@@ -41,14 +41,14 @@
                 <div class="col justify-content-end">
                     <div class="card-body">
                         <h5>
-                            {{ form.submit(class="btn btn-success")}}
+                            {{ moneyform.submit(class="btn btn-success")}}
                         </h5>
                     </div>
                 </div>
             </div>
         </div>
-        {% if form.errors %}
-        {{ form.errors }}
+        {% if moneyform.errors %}
+        {{ moneyform.errors }}
         {% endif %}
     </form>
 </div>

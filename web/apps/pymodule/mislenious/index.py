@@ -45,17 +45,17 @@ def index():
                 form.frends_internal.data = user_social_capital.friend_internal
 
         # humanタブデータ
-        humanform = human()
+        checkboxform = checkbox()
         # 
         moneyform = money()
 
         return render_template(
                 mislenious.name + "/" + "money_resource.html", 
                 form=form,
-                humanform = humanform,
+                checkboxform = checkboxform,
                 moneyform = moneyform)
 
-def human():
+def checkbox():
 
         check_box = CHECK_BOX(
                 system_id = check_jwt()
@@ -92,9 +92,6 @@ def human():
 
                 #チェックボックス
                 form = checkbox_builder(onesteplist, gakurekiClass)
-
-                # 誕生日
-                form.birth_day.data = user_check_box.birth_day
 
         else:
                 # マスターからのデータを利用する
@@ -194,7 +191,7 @@ def save_human(page):
 
         gakurekiClass = Gakureki()
 
-        #人的資本はビルダーでビルドしつつデータを保管してゆく
+        #ビルダーでビルドしつつデータを保管してゆく
         form = checkbox_builder(oneseplist, gakurekiClass)
 
         if request.method == "POST" and form.validate_on_submit():
