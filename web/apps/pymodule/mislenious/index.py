@@ -128,8 +128,6 @@ def money():
         # 既に登録データが存在する場合は初期フォームに設定
         if money_all_record is not None:
 
-                form.kozukaidate.data = money_all_record.okozukai_date
-                form.kozukaimani.data = money_all_record.okozukai
                 # お手伝いリスト
                 # form.chorelist.data = chores_record.chore_maniはできないのでappend_entryする
                 for chore in chores_record.chore_mani:
