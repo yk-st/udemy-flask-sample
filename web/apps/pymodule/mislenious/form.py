@@ -17,6 +17,8 @@ class CheckBoxForm(FlaskForm):
                          validators=[
                              NumberRange(min=0)])
 
+    submit = SubmitField('保存')
+
 class HumanBasicFormBase(FlaskForm):
 
     def __init__(self, *args, **kwargs):
