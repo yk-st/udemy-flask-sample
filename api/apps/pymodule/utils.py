@@ -36,7 +36,24 @@ def check_token(func):
 
                 #　イントロスペクションを行うエンドポイントを追加するとよりベター
                 token_info = keycloak_openid.introspect(request.headers["X-Access-Token"])
-                print(token_info)
+
+                # アクティブじゃない場合はNg
+                if not token_info['active']:
+                    api.abort(403)
+
+                #print(token_info)
+                #{'exp': 1666850209, 'iat': 1666843009, 'jti': '98c0adef-d806-444b-a0da-5c2ff21ec0d7', 
+                # 'iss': 'https://auth.udemy-flask-sample.top:8443/realms/hogepeke',
+                #  'aud': ['flasks', 'account'], 
+                # 'sub': 'cafab263-01cb-4e02-89a1-9d96a1a8996f', 
+                # 'typ': 'Bearer', 'azp': 'flasks', 
+                # 'preferred_username': 'service-account-flasks', 
+                # 'email_verified': False, 'acr': '1',
+                #  'realm_access': {'roles': ['offline_access', 'default-roles-hogepeke', 'uma_authorization']}, 
+                # 'resource_access': {'account': {'roles': ['manage-account', 'manage-account-links', 'view-profile']}}, 
+                # 'scope': 'openid email profile', 'clientHost': '118.27.18.23', 
+                # 'clientId': 'flasks', 'clientAddress': '118.27.18.23', 'client_id': 
+                # 'flasks', 'username': 'service-account-flasks', 'active': True}
 
             except Exception as e:
                 print(e)
