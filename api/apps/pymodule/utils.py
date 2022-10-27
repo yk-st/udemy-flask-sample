@@ -15,6 +15,7 @@ def check_token(func):
 
     @wraps(func)
     def token(*args, **kwargs):
+        
         print(request.headers)
         # Token　チェック
         if "X-Access-Token" in request.headers:
