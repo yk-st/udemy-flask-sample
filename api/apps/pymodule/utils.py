@@ -6,7 +6,7 @@ from apps.app import api
 from functools import wraps
 from keycloak import KeycloakOpenID
 
-keycloak_openid = KeycloakOpenID(server_url="https://auth.udemy-flask-sample.top:8443",
+keycloak_openid = KeycloakOpenID(server_url="https://auth.udemy-flask-sample.top:8443/",
                                  client_id="flasks",
                                  realm_name="hogepeke",
                                  client_secret_key=os.getenv('CLIENT_SECRET', ''))

@@ -63,6 +63,7 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASS}
       JWT_PUBLIC_KEY: ${JWT_PUBLIC_KEY}
+      CLIENT_SECRET: ${CLIENT_SECRET}
     volumes:
       - socket_api:/tmp_api
 
