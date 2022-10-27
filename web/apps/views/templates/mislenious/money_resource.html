@@ -71,6 +71,18 @@
                                     {% include 'mislenious/money_tab/money_form.html' %}
                                     {% include 'mislenious/money_tab/input_form.html' %}
                                     {% include 'mislenious/money_tab/radio_check.html' %}
+
+                                    {% if checkboxform.errors %}
+                                    {{ checkboxform.errors }}
+                                    {% endif %}
+
+                                    {% if basicform.errors %}
+                                    {{ basicform.errors }}
+                                    {% endif %}
+
+                                    {% if moneyform.errors %}
+                                    {{ moneyform.errors }}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -80,18 +92,6 @@
         </div>
     </div>
 </div>
-
-{% if checkboxform.errors %}
-{{ checkboxform.errors }}
-{% endif %}
-
-{% if basicform.errors %}
-{{ basicform.errors }}
-{% endif %}
-
-{% if moneyform.errors %}
-{{ moneyform.errors }}
-{% endif %}
 
   {% endblock content %}
 
