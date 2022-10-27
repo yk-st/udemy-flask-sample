@@ -7,24 +7,6 @@
 
 {% block content %}
 
-<script>
-    var i = 0;
-    function addInput(){
-        i++;
-        var clone = $(event.srcElement.getAttribute('data-parent')).
-            clone(true).
-            attr('id', 'oshigoto' + i).
-            attr('val', i).
-            appendTo("#roots")
-
-    }
-
-    function delInput(){
-        $(this).closest(".row").find("div").remove();
-    }
-
-</script>
-
 <div class="pcoded-main-container">
     <div class="pcoded-wrapper">
         <div class="pcoded-content">
