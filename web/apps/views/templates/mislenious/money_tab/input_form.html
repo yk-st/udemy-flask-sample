@@ -1,5 +1,5 @@
 <div class="tab-pane fade show" id="hoge" role="tabpanel" aria-labelledby="hoge-tab">
-    <form role="form" method="POST" action="{{ url_for('mislenious.save_social', page='social') }}">
+    <form role="form" method="POST" action="{{ url_for('mislenious.save_form', page='social') }}">
 
         {{ form.hidden_tag() }}
         {{ form.csrf_token }}

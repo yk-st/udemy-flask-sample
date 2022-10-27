@@ -149,7 +149,7 @@ def money():
 
 
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
-def save_social(page):
+def save_form(page):
 
         form = CheckBoxForm()
 
@@ -183,7 +183,7 @@ def save_social(page):
         return render_template(mislenious.name + "/" + "money_resource.html", form=form)
 
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
-def save_human(page):
+def save_radio_checkbox(page):
 
         oneseplist:ONESTEP_MASTER = None
         # マスターデータからデータを取得
@@ -232,10 +232,10 @@ def save_human(page):
         else:
                 flash("無効なフォーム送信です")
 
-        return render_template(mislenious.name + "/" + "money_resource.html", form=form)
+        return render_template(mislenious.name + "/" + "money_resource.html", checkboxform=form)
 
 @mislenious.route('/save/mislenious/<page>', methods=["GET", "POST"])
-def save_money(page):
+def save_form_list(page):
 
         form:MoneyBasicForm = MoneyBasicForm()
 
@@ -282,4 +282,4 @@ def save_money(page):
         else:
                 flash("無効なフォーム送信です")
         
-        return render_template(mislenious.name + "/" + "money_resource.html", form=form)
+        return render_template(mislenious.name + "/" + "money_resource.html", moneyform=form)
