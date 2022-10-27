@@ -76,7 +76,7 @@ class MoneyBasicForm(FlaskForm):
 
     # お手伝いリスト(return list dict)
     # リストを作る時にはフィールドリスト（フォームを複数個使う場合）
-    chorelist = FieldList(FormField(ChoreForm, 'Member'), min_entries=0, max_entries=15)
+    chorelist = FieldList(FormField(ChoreForm, 'Member'), min_entries=0, max_entries=500)
 
     submit = SubmitField('保存')
 
