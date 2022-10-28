@@ -42,4 +42,4 @@ COPY ./ ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 起動
-CMD uwsgi --ini app.ini
+CMD uwsgi --ini app.ini --touch-logreopen
