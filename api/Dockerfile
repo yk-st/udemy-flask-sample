@@ -35,4 +35,4 @@ COPY ./ ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 起動
-CMD uwsgi --ini app.ini uwsgi
+CMD uwsgi --ini app.ini
