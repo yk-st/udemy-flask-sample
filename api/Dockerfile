@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     && pip install --upgrade pip
 
 RUN apt install -y logrotate
+COPY ./inf/uwsgi_log_rotate.conf /etc/logrotate.d/
 
 # appsディレクトリapp.pyのcreate_app()
 # Flaskオブジェクトを作成する関数を指定する
