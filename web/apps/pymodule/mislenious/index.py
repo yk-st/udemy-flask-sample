@@ -112,12 +112,6 @@ def money():
 
         form = MoneyBasicForm()
 
-        money_all:MONEY_ALL = MONEY_ALL(
-                system_id = check_jwt()
-        )
-
-        money_all_record:MONEY_ALL = money_all.get_record()
-
         # お手伝いテーブルの取得
         chores:CHORES = CHORES(
                 system_id = check_jwt()
@@ -126,7 +120,7 @@ def money():
         chores_record:CHORES = chores.get_record()
 
         # 既に登録データが存在する場合は初期フォームに設定
-        if money_all_record is not None:
+        if chores_record is not None:
 
                 # お手伝いリスト
                 # form.chorelist.data = chores_record.chore_maniはできないのでappend_entryする
@@ -169,7 +163,6 @@ def save_form(page):
                                 system_id = check_jwt(),
                                 friend_internal = basicform.frends_internal.data,
                                 friend_external = basicform.frends_external.data,
-                                social_score = 10
                         )
                 else:
                         user_otomodati.friend_internal = basicform.frends_internal.data,
@@ -218,22 +211,22 @@ def save_radio_checkbox(page):
                         system_id = check_jwt()
                 )
 
-                # 人的資本取得
-                human_capital_record:CHECK_BOX = check_box.get_record()   
+                
+                checkbox_record:CHECK_BOX = check_box.get_record()   
 
                 # 初期登録の場合
-                if human_capital_record is None:
-                        human_capital_record:CHECK_BOX = CHECK_BOX(
+                if checkbox_record is None:
+                        checkbox_record:CHECK_BOX = CHECK_BOX(
                                 system_id = check_jwt(),
                                 gakureki = checkboxform.gakureki_radio.data,
                                 onestep_staus = onestep_status,
                         )
                 else:   
-                        human_capital_record.onestep_staus = onestep_status
-                        human_capital_record.gakureki = checkboxform.gakureki_radio.data
+                        checkbox_record.onestep_staus = onestep_status
+                        checkbox_record.gakureki = checkboxform.gakureki_radio.data
 
-                # データベースへの反映(いまいち動かん。。)
-                db.session.add(human_capital_record)
+                # データベースへの反映
+                db.session.add(checkbox_record)
                 db.session.commit()
 
                 flash("登録が完了しました")
@@ -256,12 +249,6 @@ def save_form_list(page):
 
         if request.method == "POST" and moenyform.validate_on_submit():
 
-                money_all:MONEY_ALL = MONEY_ALL(
-                        system_id = check_jwt()
-                )
-
-                money_all_record:MONEY_ALL = money_all.get_record()
-
                 # お手伝いテーブルの登録
                 chores:CHORES = CHORES(
                         system_id = check_jwt()
@@ -270,11 +257,7 @@ def save_form_list(page):
                 chores_record:CHORES = chores.get_record()
 
                 # 初回登録の場合
-                if money_all_record is None:
-                        money_all_record = MONEY_ALL(
-                                system_id = check_jwt(),
-                        )
-
+                if chores_record is None:
                         chores_record = CHORES(
                                 system_id = check_jwt(),
                                 chore_mani = moenyform.chorelist.data
@@ -282,14 +265,12 @@ def save_form_list(page):
                 else:
                         chores_record.chore_mani = moenyform.chorelist.data
                 
-                db.session.add(money_all_record)
                 db.session.add(chores_record)
                 db.session.commit()
 
                 flash("登録が完了しました")
                 
         else:
-                print("ここ？")
                 flash("無効なフォーム送信です")
         
         checkboxform = checkbox()

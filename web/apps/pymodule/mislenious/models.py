@@ -9,11 +9,9 @@ class CHECK_BOX(db.Model):
     __tablename__ = "check_box"
 
     system_id = db.Column(db.String(256) , primary_key=True)
-    birth_day = db.Column(db.DateTime)
     gakureki = db.Column(db.Integer)
     # onestep_id:True,False
     onestep_staus = db.Column(db.JSON())
-    human_score = db.Column(db.BigInteger)
     create_at = db.Column(db.DateTime, default=datetime.now)
     update_at = db.Column(db.DateTime, default=datetime.now)
 
@@ -39,24 +37,11 @@ class OTOMODATI(db.Model):
     system_id = db.Column(db.String(256) , primary_key=True)
     friend_internal = db.Column(db.Integer, default=0)
     friend_external =  db.Column(db.Integer, default=0)
-    social_score = db.Column(db.BigInteger)
     create_at = db.Column(db.DateTime, default=datetime.now)
     update_at = db.Column(db.DateTime, default=datetime.now)
 
     def get_record(self):
         return OTOMODATI.query.filter_by(system_id = self.system_id).first()
-
-class MONEY_ALL(db.Model):
-    __tablename__ = "moneyall"
-
-    system_id = db.Column(db.String(256) , primary_key=True)
-    # 現状いくら持っているか
-    mani = db.Column(db.BigInteger)
-    create_at = db.Column(db.DateTime, default=datetime.now)
-    update_at = db.Column(db.DateTime, default=datetime.now)
-
-    def get_record(self):
-        return MONEY_ALL.query.filter_by(system_id = self.system_id).first()
 
 # お手伝い
 class CHORES(db.Model):
