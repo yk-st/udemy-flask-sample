@@ -6,7 +6,7 @@ import logging
 
 from apps.app import db
 from apps.pymodule.setting.index import check_jwt
-from apps.pymodule.mislenious.models import MONEY_ALL, OTOMODATI, CHECK_BOX, CHORES, ONESTEP_MASTER
+from apps.pymodule.mislenious.models import OTOMODATI, CHECK_BOX, CHORES, ONESTEP_MASTER
 from apps.pymodule.mislenious.form import BasicForm, checkbox_builder, MoneyBasicForm, ChoreForm
 
 mislenious = Blueprint('mislenious', 
