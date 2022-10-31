@@ -162,7 +162,7 @@ services:
       # 32バイトじゃないとダメ
       # Ccookie secretを使って「OAUTH2_PROXY_COOKIE_NAME」で書き込まれた内容をデコードできるがしない
       OAUTH2_PROXY_COOKIE_SECRET: $COOKIE_SEC
-      OAUTH2_PROXY_COOKIE_SECURE: "false"
+      OAUTH2_PROXY_COOKIE_SECURE: "true"
       # TOKENが書き込まれるCookieの名前（あまり使うことはない）
       OAUTH2_PROXY_COOKIE_NAME: "oauth2_proxy"
       # サブドメインでもアクセスできるようにする
